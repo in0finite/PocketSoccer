@@ -32,7 +32,7 @@ public class NewGameActivity extends AppCompatActivity {
     ImageView createFlag(int imageId) {
         ImageView imageView = new ImageView(getApplicationContext());
         //imageView.setLayoutParams(new ViewGroup.LayoutParams());
-        imageView.setMaxHeight(150);
+        imageView.setMaxHeight(50);
         imageView.setImageResource(imageId);
         return imageView;
     }
