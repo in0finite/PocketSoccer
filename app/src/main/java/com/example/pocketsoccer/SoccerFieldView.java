@@ -131,6 +131,19 @@ public class SoccerFieldView extends View {
             fieldDrawable.draw(canvas);
         }
 
+        // draw ball
+        if (ballDrawable != null) {
+            drawDrawable(ballDrawable, SoccerActivity.ballPos, SoccerActivity.ballSize, canvas);
+        }
+
+    }
+
+    static void drawDrawable(Drawable drawable, Vec2 pos, Vec2 size, Canvas canvas) {
+        drawable.setBounds((int)(pos.x - size.x / 2f),
+                (int)(pos.y + size.y / 2f),
+                (int)(pos.x + size.x / 2f),
+                (int)(pos.y - size.y / 2f));
+        drawable.draw(canvas);
     }
 
     /**

@@ -11,6 +11,8 @@ public class SoccerActivity extends AppCompatActivity {
 
     public static int ballImageId;
     public static int fieldImageId;
+    public static Vec2 ballPos = new Vec2(50, 50);
+    public static Vec2 ballSize = new Vec2(40, 40);
 
 
     @Override
