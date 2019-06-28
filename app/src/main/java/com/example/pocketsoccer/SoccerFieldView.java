@@ -2,9 +2,11 @@ package com.example.pocketsoccer;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
@@ -79,6 +81,9 @@ public class SoccerFieldView extends View {
 
         ballPaint = new Paint();
         fieldPaint = new Paint();
+
+        ballDrawable = getResources().getDrawable(SoccerActivity.ballImageId);
+        fieldDrawable = getResources().getDrawable(SoccerActivity.fieldImageId);
 
 
         // Update TextPaint and text measurements from attributes
