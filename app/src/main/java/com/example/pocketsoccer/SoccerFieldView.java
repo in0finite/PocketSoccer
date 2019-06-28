@@ -91,12 +91,14 @@ public class SoccerFieldView extends View {
     }
 
     private void invalidateTextPaintAndMeasurements() {
+        /*
         mTextPaint.setTextSize(mExampleDimension);
         mTextPaint.setColor(mExampleColor);
         mTextWidth = mTextPaint.measureText(mExampleString);
 
         Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
         mTextHeight = fontMetrics.bottom;
+        */
     }
 
     @Override
