@@ -105,7 +105,13 @@ public class SoccerFieldView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        setMeasuredDimension(getWidth(), getHeight());
+        int w = widthMeasureSpec;
+        int h = heightMeasureSpec;
+
+        System.out.printf("onMeasure(): %d, %d\n", w, h);
+        System.out.println("onMeasure()");
+
+        setMeasuredDimension(w, h);
 
     }
 

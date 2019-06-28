@@ -23,18 +23,24 @@ public class SoccerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_soccer);
 
 
         // assign image ids
         ballImageId = R.drawable.football_ball_2426_2380_resized;
         fieldImageId = R.drawable.field;
 
+        setContentView(R.layout.activity_soccer);
+
         // create custom view
-        View inflatedView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.sample_soccer_field_view, null);
-        final View customView = ((ViewGroup) inflatedView).getChildAt(0);
+        //View inflatedView = LayoutInflater.from(this).inflate(R.layout.sample_soccer_field_view, null);
+        //final View customView = ((ViewGroup) inflatedView).getChildAt(0);
+        final View customView = findViewById(R.id.soccerFieldView);
+
         Log.i(MainActivity.LOG_TAG, "created custom view, class: " + customView.getClass().getName());
+
+        //customView.requestLayout();
 
         // create async task which will update custom view
         mTask = new MyTask(new Runnable() {
