@@ -5,8 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
 public class SoccerActivity extends AppCompatActivity {
+
+    public static int ballImageId;
+    public static int fieldImageId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

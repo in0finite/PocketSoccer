@@ -23,6 +23,13 @@ public class SoccerFieldView extends View {
     private float mTextWidth;
     private float mTextHeight;
 
+    Drawable ballDrawable;
+    Drawable fieldDrawable;
+
+    Paint ballPaint, fieldPaint;
+
+
+
     public SoccerFieldView(Context context) {
         super(context);
         init(null, 0);
@@ -39,6 +46,8 @@ public class SoccerFieldView extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
+
+        /*
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.SoccerFieldView, defStyle, 0);
@@ -61,11 +70,16 @@ public class SoccerFieldView extends View {
         }
 
         a.recycle();
+        */
 
         // Set up a default TextPaint object
         mTextPaint = new TextPaint();
         mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextAlign(Paint.Align.LEFT);
+
+        ballPaint = new Paint();
+        fieldPaint = new Paint();
+
 
         // Update TextPaint and text measurements from attributes
         invalidateTextPaintAndMeasurements();
@@ -82,6 +96,7 @@ public class SoccerFieldView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+
         super.onDraw(canvas);
 
         // TODO: consider storing these as member variables to reduce
@@ -94,6 +109,7 @@ public class SoccerFieldView extends View {
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
+        /*
         // Draw the text.
         canvas.drawText(mExampleString,
                 paddingLeft + (contentWidth - mTextWidth) / 2,
@@ -106,6 +122,15 @@ public class SoccerFieldView extends View {
                     paddingLeft + contentWidth, paddingTop + contentHeight);
             mExampleDrawable.draw(canvas);
         }
+        */
+
+        // draw field
+        if (fieldDrawable != null) {
+            fieldDrawable.setBounds(paddingLeft, paddingTop,
+                    paddingLeft + contentWidth, paddingTop + contentHeight);
+            fieldDrawable.draw(canvas);
+        }
+
     }
 
     /**
