@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -103,6 +104,8 @@ public class SoccerFieldView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+
+        Log.i("soccer", "onDraw()");
 
         super.onDraw(canvas);
 
