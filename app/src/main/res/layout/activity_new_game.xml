@@ -104,4 +104,11 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic[7]" />
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/buttonStartGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Start" />
 </LinearLayout>

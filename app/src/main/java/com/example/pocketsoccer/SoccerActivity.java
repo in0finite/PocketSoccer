@@ -22,7 +22,7 @@ public class SoccerActivity extends AppCompatActivity {
 
 
         // assign image ids
-        ballImageId = R.drawable.football_ball_png_image_png_image_football_png_2426_2380;
+        ballImageId = R.drawable.football_ball_2426_2380;
         fieldImageId = R.drawable.field;
 
         // create custom view

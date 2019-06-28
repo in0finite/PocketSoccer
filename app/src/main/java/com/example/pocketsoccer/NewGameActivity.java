@@ -2,6 +2,7 @@ package com.example.pocketsoccer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,14 @@ public class NewGameActivity extends AppCompatActivity {
             ((ViewGroup) viewById2.getChildAt(0)).addView(createFlag(imageId));
         }
 
+        // set button action
+        findViewById(R.id.buttonStartGame).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startGame();
+            }
+        });
+
     }
 
     ImageView createFlag(int imageId) {
@@ -35,6 +44,11 @@ public class NewGameActivity extends AppCompatActivity {
         imageView.setMaxHeight(50);
         imageView.setImageResource(imageId);
         return imageView;
+    }
+
+    void startGame() {
+        Intent intent = new Intent(this, SoccerActivity.class);
+        startActivity(intent);
     }
 
 }
