@@ -103,6 +103,13 @@ public class SoccerFieldView extends View {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+        setMeasuredDimension(getWidth(), getHeight());
+
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
 
         Log.i(MainActivity.LOG_TAG, "onDraw()");

@@ -40,6 +40,7 @@ public class SoccerActivity extends AppCompatActivity {
         mTask = new MyTask(new Runnable() {
             @Override
             public void run() {
+                Log.i(MainActivity.LOG_TAG, "update");
                 customView.invalidate();
             }
         });

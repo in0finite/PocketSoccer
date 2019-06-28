@@ -25,6 +25,8 @@ public class MyTask extends AsyncTask<String, Integer, String[]> {
             //e.printStackTrace();
         }
 
+        System.out.println("Task done");
+
         return new String[0];
     }
 
