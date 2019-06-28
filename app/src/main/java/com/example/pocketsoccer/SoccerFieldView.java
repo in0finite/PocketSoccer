@@ -105,7 +105,7 @@ public class SoccerFieldView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        Log.i("soccer", "onDraw()");
+        Log.i(MainActivity.LOG_TAG, "onDraw()");
 
         super.onDraw(canvas);
 

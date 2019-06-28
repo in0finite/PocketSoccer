@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 public class SoccerActivity extends AppCompatActivity {
@@ -30,7 +32,9 @@ public class SoccerActivity extends AppCompatActivity {
         fieldImageId = R.drawable.field;
 
         // create custom view
-        final View customView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.sample_soccer_field_view, null);
+        View inflatedView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.sample_soccer_field_view, null);
+        final View customView = ((ViewGroup) inflatedView).getChildAt(0);
+        Log.i(MainActivity.LOG_TAG, "created custom view, class: " + customView.getClass().getName());
 
         // create async task which will update custom view
         mTask = new MyTask(new Runnable() {
