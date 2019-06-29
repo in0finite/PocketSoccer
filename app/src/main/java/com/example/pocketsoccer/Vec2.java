@@ -1,7 +1,17 @@
 package com.example.pocketsoccer;
 
+import java.util.Objects;
+
 public class Vec2 {
     public float x, y;
+
+
+    public static Vec2 zero() { return new Vec2(0, 0); }
+
+
+    public Vec2() {
+
+    }
 
     public Vec2(float x, float y) {
         this.x = x;
@@ -14,6 +24,15 @@ public class Vec2 {
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vec2 vec2 = (Vec2) o;
+        return Float.compare(vec2.x, x) == 0 &&
+                Float.compare(vec2.y, y) == 0;
     }
 
     public Vec2 clone() {

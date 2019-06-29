@@ -18,9 +18,10 @@ public class SoccerActivity extends AppCompatActivity {
     public static int ballImageId;
     public static int fieldImageId;
 
-    public Vec2 ballPos = new Vec2(0, 0);
-    public Vec2 ballSize = new Vec2(40, 40);
-    public Vec2 ballVelocity = new Vec2(0, 0);
+    public Movable ballMovable = new Movable(new Vec2(150, 150), new Vec2(40, 40), Vec2.zero());
+    //public Vec2 ballPos = new Vec2(0, 0);
+    //public Vec2 ballSize = new Vec2(40, 40);
+    //public Vec2 ballVelocity = new Vec2(0, 0);
 
     static final int kNumPhysicsSteps = 10;
 
@@ -66,105 +67,103 @@ public class SoccerActivity extends AppCompatActivity {
         });
         mTask.execute();
 
-        // reset ball position
-        ballPos = new Vec2(150, 150);
 
         // set random velocity for the ball
-        ballVelocity = new Vec2((float) Math.random(), (float) Math.random());
+        Vec2 ballVelocity = new Vec2((float) Math.random(), (float) Math.random());
         ballVelocity = ballVelocity.normalized();
         ballVelocity.multiply(800f);
+        ballMovable.velocity = ballVelocity;
 
     }
 
     void updateGame() {
 
+        RectF[] goalRects = new RectF[]{getLeftGoalRect(), getRightGoalRect()};
+
         // perform additional steps for more precise collision
 
         for (int i=0; i < kNumPhysicsSteps; i++) {
-            updateGameSingleStep();
+            updateGameSingleStep(goalRects);
         }
+
+        // update graphics
+        mCustomView.invalidate();
 
     }
 
-    void updateGameSingleStep() {
+    void updateGameSingleStep(RectF[] goalRects) {
 
-        //Log.i(MainActivity.LOG_TAG, "update");
+        // for each movable: move it, constrain position, check for collision with goal posts
 
-        ballPos.add(Vec2.multiply(ballVelocity, deltaTime));
+        updateMovable(ballMovable, goalRects);
+
+        // check for collision between movables, but only for those who didn't have collision with static object
+
+
+        // at the end, check if ball entered goal
+        checkCollisionBetweenGoalsAndBall(goalRects);
+
+    }
+
+    void updateMovable(Movable movable, RectF[] goalRects) {
+
+        movable.hadCollisionWithStaticObject = false;
+
+        // update position based on velocity
+        movable.pos.add(Vec2.multiply(movable.velocity, deltaTime));
 
         float fieldWidth = mCustomView.getWidth();
         float fieldHeight = mCustomView.getHeight();
 
         // constrain position
 
-        if (ballPos.x < 0) {
-            ballPos.x = 0;
-            ballVelocity.x = Math.abs(ballVelocity.x);
+        Vec2 posBeforeConstraining = movable.pos.clone();
+
+        if (movable.pos.x < 0) {
+            movable.pos.x = 0;
+            movable.velocity.x = Math.abs(movable.velocity.x);
         }
-        else if (ballPos.x > fieldWidth) {
-            ballPos.x = fieldWidth;
-            ballVelocity.x = - Math.abs(ballVelocity.x);
+        else if (movable.pos.x > fieldWidth) {
+            movable.pos.x = fieldWidth;
+            movable.velocity.x = - Math.abs(movable.velocity.x);
         }
 
-        if (ballPos.y < 0) {
-            ballPos.y = 0;
-            ballVelocity.y = Math.abs(ballVelocity.y);
+        if (movable.pos.y < 0) {
+            movable.pos.y = 0;
+            movable.velocity.y = Math.abs(movable.velocity.y);
         }
-        else if(ballPos.y > fieldHeight) {
-            ballPos.y = fieldHeight;
-            ballVelocity.y = - Math.abs(ballVelocity.y);
+        else if(movable.pos.y > fieldHeight) {
+            movable.pos.y = fieldHeight;
+            movable.velocity.y = - Math.abs(movable.velocity.y);
         }
 
-        // check for collision between goal posts and ball
+        if (! posBeforeConstraining.equals(movable.pos)) {
+            // movable hit an edge of the field
+            movable.hadCollisionWithStaticObject = true;
+        }
 
-        RectF[] goalRects = new RectF[]{getLeftGoalRect(), getRightGoalRect()};
+        // check for collision between goal posts and movable
 
         goals_for: for (RectF goalRect : goalRects) {
             RectF[] goalPostRects = new RectF[]{getUpperGoalPost(goalRect), getLowerGoalPost(goalRect)};
             for (RectF goalPostRect : goalPostRects) {
-                RectF ballRect = rectFromPosAndSize(ballPos, ballSize);
-                RectF ballRectClone = new RectF(ballRect);
-                if (resolveCollisionBetweenCircleAndGoalPost(ballRect, goalPostRect, ballVelocity)) {
+                RectF movableRect = rectFromPosAndSize(movable.pos, movable.size);
+                RectF movableRectClone = new RectF(movableRect);
+                if (resolveCollisionBetweenCircleAndGoalPost(movableRect, goalPostRect, movable.velocity)) {
                     // collision happened
 
-                    // apply position
-                    //ballPos = new Vec2(ballRect.centerX(), ballRect.centerY());
-                    ballPos.y += mPosDeltaAfterCollision;
+                    movable.hadCollisionWithStaticObject = true;
+
+                    // apply new position
+                    //movable.pos = new Vec2(movableRect.centerX(), movableRect.centerY());
+                    movable.pos.y += mPosDeltaAfterCollision;
                     System.out.printf("ball position after collision: %s, original ball rect %s, new ball rect %s\n",
-                            ballPos.toString(), ballRectClone.toString(), ballRect.toString());
+                            movable.pos.toString(), movableRectClone.toString(), movableRect.toString());
 
                     break goals_for;
                 }
             }
         }
-
-        // check if ball is inside of any goal
-
-        boolean isInsideAnyGoal = false;
-        RectF insideGoalRect = null;
-
-        for (RectF goalRect : goalRects) {
-            if (isPointInsideRect(ballPos, goalRect)) {
-                // IT'S A GOAL !
-
-                isInsideAnyGoal = true;
-                insideGoalRect = goalRect;
-
-                break;
-            }
-        }
-
-        if (isInsideAnyGoal && !mWasBallInsideGoalLastTime) {
-            boolean isLeftGoal = (insideGoalRect == goalRects[0]);
-            System.out.printf("GOAL ! is left: %b\n", isLeftGoal);
-        }
-
-        mWasBallInsideGoalLastTime = isInsideAnyGoal;
-
-
-
-        // update graphics
-        mCustomView.invalidate();
 
     }
 
@@ -205,6 +204,33 @@ public class SoccerActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    void checkCollisionBetweenGoalsAndBall(RectF[] goalRects) {
+
+        // check if ball is inside of any goal
+
+        boolean isInsideAnyGoal = false;
+        RectF insideGoalRect = null;
+
+        for (RectF goalRect : goalRects) {
+            if (isPointInsideRect(ballMovable.pos, goalRect)) {
+                // IT'S A GOAL !
+
+                isInsideAnyGoal = true;
+                insideGoalRect = goalRect;
+
+                break;
+            }
+        }
+
+        if (isInsideAnyGoal && !mWasBallInsideGoalLastTime) {
+            boolean isLeftGoal = (insideGoalRect == goalRects[0]);
+            System.out.printf("GOAL ! is left: %b\n", isLeftGoal);
+        }
+
+        mWasBallInsideGoalLastTime = isInsideAnyGoal;
+
     }
 
     RectF getLeftGoalRect() {
