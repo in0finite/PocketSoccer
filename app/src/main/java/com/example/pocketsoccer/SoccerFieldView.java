@@ -164,7 +164,7 @@ public class SoccerFieldView extends View {
 
         // draw ball
         if (ballDrawable != null) {
-            drawDrawable(ballDrawable, SoccerActivity.instance.ballPos, SoccerActivity.instance.ballSize, canvas);
+            drawDrawable(ballDrawable, SoccerActivity.instance.ballMovable.pos, SoccerActivity.instance.ballMovable.size, canvas);
         }
 
         // draw goal posts
