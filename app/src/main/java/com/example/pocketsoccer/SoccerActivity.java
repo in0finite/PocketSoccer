@@ -189,7 +189,7 @@ public class SoccerActivity extends AppCompatActivity {
                 isFromUpperSide = false;
             }
 
-            delta += Math.signum(delta) * 10f;
+            delta += Math.signum(delta) * 40f;
 
 //            circleRect.top += delta;
 //            circleRect.bottom += delta;
