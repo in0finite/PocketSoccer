@@ -6,6 +6,7 @@ public class Movable {
     public Vec2 pos = new Vec2();
     public Vec2 size = new Vec2();
     public Vec2 velocity = new Vec2();
+    public float mass = 0f;
     //public int drawableId = 0;
     public Drawable drawable = null;
     public boolean hadCollisionWithStaticObject = false;
@@ -15,4 +16,9 @@ public class Movable {
         this.size = size;
         this.velocity = velocity;
     }
+
+    public float getRadius() {
+        return this.size.x * 0.5f;
+    }
+
 }

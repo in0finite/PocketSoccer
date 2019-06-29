@@ -50,10 +50,20 @@ public class Vec2 {
         return this;
     }
 
+    Vec2 substract(Vec2 other) {
+        this.x -= other.x;
+        this.y -= other.y;
+        return this;
+    }
+
     Vec2 multiply(float f) {
         this.x *= f;
         this.y *= f;
         return this;
+    }
+
+    public static Vec2 substract(Vec2 v1, Vec2 v2) {
+        return new Vec2(v1.x - v2.x, v1.y - v2.y);
     }
 
     public static Vec2 multiply(Vec2 vec2, float f) {
@@ -69,6 +79,11 @@ public class Vec2 {
         if (0 == length)
             return new Vec2(0, 0);
         return new Vec2(this.x / length, this.y / length);
+    }
+
+    public static float distance(Vec2 v1, Vec2 v2) {
+        Vec2 diff = v1.clone().substract(v2);
+        return diff.length();
     }
 
     public static Vec2 randomNormalized() {

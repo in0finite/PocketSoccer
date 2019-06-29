@@ -268,6 +268,41 @@ public class SoccerActivity extends AppCompatActivity {
 
     }
 
+    void checkCollisionBetweenMovables() {
+
+        for (int i=0; i < this.movables.size(); i++) {
+            Movable movableA = this.movables.get(i);
+            if (movableA.hadCollisionWithStaticObject)
+                continue;
+            for (int j=i+1; j < this.movables.size(); j++) {
+                Movable movableB = this.movables.get(j);
+                if (movableB.hadCollisionWithStaticObject)
+                    continue;
+
+                float distance = Vec2.distance(movableA.pos, movableB.pos);
+                if (distance < movableA.getRadius() + movableB.getRadius()) {
+                    // 2 circles intersect
+                    // resolve collision
+
+                    movableA.velocity.add(movableB.velocity);
+                    movableB.velocity.add(movableA.velocity);
+
+                    Vec2 diff = Vec2.substract(movableA.pos, movableB.pos);
+                    Vec2 diffNormalized = diff.normalized();
+                    float delta = movableA.getRadius() + movableB.getRadius() - distance + 0.01f;
+
+                    movableA.pos.add( Vec2.multiply(diffNormalized, delta / 2f) );
+                    movableB.pos.add( Vec2.multiply(diffNormalized, - delta / 2f) );
+
+                    movableA.hadCollisionWithStaticObject = true;
+                    movableB.hadCollisionWithStaticObject = true;
+                }
+
+            }
+        }
+
+    }
+
     RectF getLeftGoalRect() {
         return new RectF(0, getFieldHeight() / 3f, getGoalWidth(), getFieldHeight() * 2f / 3f);
     }
