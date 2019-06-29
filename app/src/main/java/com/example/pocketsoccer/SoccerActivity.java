@@ -73,8 +73,7 @@ public class SoccerActivity extends AppCompatActivity {
 
 
         // set random velocity for the ball
-        Vec2 ballVelocity = new Vec2((float) Math.random(), (float) Math.random());
-        ballVelocity = ballVelocity.normalized();
+        Vec2 ballVelocity = Vec2.randomNormalized();
         ballVelocity.multiply(800f);
         this.ballMovable.velocity = ballVelocity;
 
@@ -95,14 +94,14 @@ public class SoccerActivity extends AppCompatActivity {
             float x = getFieldWidth() / 3f;
             float y = (i + 1) / 4f * getFieldHeight();
 
-            Movable movable = new Movable(new Vec2(x, y), playerSize, Vec2.zero());
+            Movable movable = new Movable(new Vec2(x, y), playerSize, Vec2.randomWithMaxLength(600));
             movable.drawableId = flagId1;
             this.movables.add(movable);
 
             // right side
             x = getFieldWidth() * 2f / 3f;
 
-            movable = new Movable(new Vec2(x, y), playerSize, Vec2.zero());
+            movable = new Movable(new Vec2(x, y), playerSize, Vec2.randomWithMaxLength(600));
             movable.drawableId = flagId2;
             this.movables.add(movable);
 

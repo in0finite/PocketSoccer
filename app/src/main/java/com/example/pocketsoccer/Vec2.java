@@ -1,12 +1,8 @@
 package com.example.pocketsoccer;
 
-import java.util.Objects;
 
 public class Vec2 {
     public float x, y;
-
-
-    public static Vec2 zero() { return new Vec2(0, 0); }
 
 
     public Vec2() {
@@ -17,6 +13,15 @@ public class Vec2 {
         this.x = x;
         this.y = y;
     }
+
+    public Vec2(double x, double y) {
+        this.x = (float) x;
+        this.y = (float) y;
+    }
+
+
+    public static Vec2 zero() { return new Vec2(0, 0); }
+
 
     @Override
     public String toString() {
@@ -64,6 +69,18 @@ public class Vec2 {
         if (0 == length)
             return new Vec2(0, 0);
         return new Vec2(this.x / length, this.y / length);
+    }
+
+    public static Vec2 randomNormalized() {
+        double x = (Math.random() - 0.5);
+        double y = (Math.random() - 0.5);
+        return new Vec2(x, y).normalized();
+    }
+
+    public static Vec2 randomWithMaxLength(float maxLength) {
+        Vec2 v = randomNormalized();
+        v.multiply((float) (Math.random() * maxLength));
+        return v;
     }
 
 }
