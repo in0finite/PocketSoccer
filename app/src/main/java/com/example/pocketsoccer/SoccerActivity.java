@@ -22,7 +22,7 @@ public class SoccerActivity extends AppCompatActivity {
     public Vec2 ballSize = new Vec2(40, 40);
     public Vec2 ballVelocity = new Vec2(0, 0);
 
-    static final int kNumPhysicsSteps = 5;
+    static final int kNumPhysicsSteps = 10;
 
     public float deltaTime = 0.05f / kNumPhysicsSteps;
 
