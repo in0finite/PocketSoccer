@@ -57,7 +57,7 @@ public class SoccerActivity extends AppCompatActivity {
         mTask.execute();
 
         // set random velocity for the ball
-        ballVelocity = new Vec2((float) Math.random() * 50, (float) Math.random() * 50);
+        ballVelocity = new Vec2((float) Math.random() * 500, (float) Math.random() * 500);
 
     }
 
