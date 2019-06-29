@@ -118,7 +118,7 @@ public class SoccerFieldView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        Log.i(MainActivity.LOG_TAG, "onDraw()");
+        //Log.i(MainActivity.LOG_TAG, "onDraw()");
 
         super.onDraw(canvas);
 
@@ -149,9 +149,8 @@ public class SoccerFieldView extends View {
 
         // draw field
         if (fieldDrawable != null) {
-            fieldDrawable.setBounds(paddingLeft, paddingTop,
-                    paddingLeft + contentWidth, paddingTop + contentHeight);
-            fieldDrawable.draw(canvas);
+            drawDrawable(fieldDrawable, new Vec2(paddingLeft + contentWidth / 2f, paddingTop + contentHeight / 2f),
+                    new Vec2(contentWidth, contentHeight), canvas);
         }
 
         // draw ball
@@ -163,9 +162,9 @@ public class SoccerFieldView extends View {
 
     static void drawDrawable(Drawable drawable, Vec2 pos, Vec2 size, Canvas canvas) {
         drawable.setBounds((int)(pos.x - size.x / 2f),
-                (int)(pos.y + size.y / 2f),
+                (int)(pos.y - size.y / 2f),
                 (int)(pos.x + size.x / 2f),
-                (int)(pos.y - size.y / 2f));
+                (int)(pos.y + size.y / 2f));
         drawable.draw(canvas);
     }
 
