@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 public class SoccerActivity extends AppCompatActivity {
 
     public static SoccerActivity instance = null;
@@ -22,6 +24,8 @@ public class SoccerActivity extends AppCompatActivity {
     //public Vec2 ballPos = new Vec2(0, 0);
     //public Vec2 ballSize = new Vec2(40, 40);
     //public Vec2 ballVelocity = new Vec2(0, 0);
+
+    public ArrayList<Movable> movables = new ArrayList<>();
 
     static final int kNumPhysicsSteps = 10;
 
@@ -72,7 +76,37 @@ public class SoccerActivity extends AppCompatActivity {
         Vec2 ballVelocity = new Vec2((float) Math.random(), (float) Math.random());
         ballVelocity = ballVelocity.normalized();
         ballVelocity.multiply(800f);
-        ballMovable.velocity = ballVelocity;
+        this.ballMovable.velocity = ballVelocity;
+
+
+        this.movables.add(this.ballMovable);
+
+        createPlayers(R.drawable.br, R.drawable.ger);
+
+    }
+
+    void createPlayers(int flagId1, int flagId2) {
+
+        Vec2 playerSize = new Vec2(80, 80);
+
+        for (int i=0; i < 3; i++) {
+
+            // left side
+            float x = getFieldWidth() / 3f;
+            float y = (i + 1) / 4f * getFieldHeight();
+
+            Movable movable = new Movable(new Vec2(x, y), playerSize, Vec2.zero());
+            movable.drawableId = flagId1;
+            this.movables.add(movable);
+
+            // right side
+            x = getFieldWidth() * 2f / 3f;
+
+            movable = new Movable(new Vec2(x, y), playerSize, Vec2.zero());
+            movable.drawableId = flagId2;
+            this.movables.add(movable);
+
+        }
 
     }
 
