@@ -159,7 +159,8 @@ public class SoccerFieldView extends View {
 
         // draw movables
         for (Movable movable : SoccerActivity.instance.movables) {
-            drawDrawable(getResources().getDrawable(movable.drawableId), movable.pos, movable.size, canvas);
+            if (movable.drawable != null)
+                drawDrawable(movable.drawable, movable.pos, movable.size, canvas);
         }
 
         // draw ball

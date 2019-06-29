@@ -1,10 +1,13 @@
 package com.example.pocketsoccer;
 
+import android.graphics.drawable.Drawable;
+
 public class Movable {
     public Vec2 pos = new Vec2();
     public Vec2 size = new Vec2();
     public Vec2 velocity = new Vec2();
-    public int drawableId = 0;
+    //public int drawableId = 0;
+    public Drawable drawable = null;
     public boolean hadCollisionWithStaticObject = false;
 
     public Movable(Vec2 pos, Vec2 size, Vec2 velocity) {

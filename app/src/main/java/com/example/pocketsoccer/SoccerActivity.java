@@ -95,14 +95,14 @@ public class SoccerActivity extends AppCompatActivity {
             float y = (i + 1) / 4f * getFieldHeight();
 
             Movable movable = new Movable(new Vec2(x, y), playerSize, Vec2.randomWithMaxLength(600));
-            movable.drawableId = flagId1;
+            movable.drawable = getResources().getDrawable(flagId1);
             this.movables.add(movable);
 
             // right side
             x = getFieldWidth() * 2f / 3f;
 
             movable = new Movable(new Vec2(x, y), playerSize, Vec2.randomWithMaxLength(600));
-            movable.drawableId = flagId2;
+            movable.drawable = getResources().getDrawable(flagId2);
             this.movables.add(movable);
 
         }
