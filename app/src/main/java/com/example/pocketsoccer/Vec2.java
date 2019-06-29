@@ -36,4 +36,15 @@ public class Vec2 {
         return new Vec2(vec2.x * f, vec2.y * f);
     }
 
+    public float length() {
+        return (float) Math.sqrt( this.x * this.x + this.y * this.y );
+    }
+
+    public Vec2 normalized() {
+        float length = this.length();
+        if (0 == length)
+            return new Vec2(0, 0);
+        return new Vec2(this.x / length, this.y / length);
+    }
+
 }
