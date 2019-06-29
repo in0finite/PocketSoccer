@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
@@ -29,7 +30,7 @@ public class SoccerFieldView extends View {
     Drawable ballDrawable;
     Drawable fieldDrawable;
 
-    Paint ballPaint, fieldPaint;
+    Paint ballPaint, fieldPaint, goalPostPaint;
 
 
 
@@ -82,6 +83,9 @@ public class SoccerFieldView extends View {
 
         ballPaint = new Paint();
         fieldPaint = new Paint();
+        goalPostPaint = new Paint();
+        goalPostPaint.setColor(Color.WHITE);
+        goalPostPaint.setStrokeWidth(3f);
 
         ballDrawable = getResources().getDrawable(SoccerActivity.ballImageId);
         fieldDrawable = getResources().getDrawable(SoccerActivity.fieldImageId);
@@ -156,6 +160,15 @@ public class SoccerFieldView extends View {
         // draw ball
         if (ballDrawable != null) {
             drawDrawable(ballDrawable, SoccerActivity.instance.ballPos, SoccerActivity.instance.ballSize, canvas);
+        }
+
+        // draw goal posts
+        RectF[] goalRects = new RectF[]{SoccerActivity.instance.getLeftGoalRect(), SoccerActivity.instance.getRightGoalRect()};
+        for (RectF goalRect : goalRects) {
+            RectF[] goalPostRects = new RectF[]{SoccerActivity.instance.getUpperGoalPost(goalRect), SoccerActivity.instance.getLowerGoalPost(goalRect)};
+            for (RectF goalPostRect : goalPostRects) {
+                canvas.drawRect(goalPostRect, goalPostPaint);
+            }
         }
 
     }
