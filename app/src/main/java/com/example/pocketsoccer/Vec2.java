@@ -8,6 +8,18 @@ public class Vec2 {
         this.y = y;
     }
 
+    @Override
+    public String toString() {
+        return "Vec2{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
+
+    public Vec2 clone() {
+        return new Vec2(this.x, this.y);
+    }
+
     Vec2 add(Vec2 other) {
         this.x += other.x;
         this.y += other.y;
