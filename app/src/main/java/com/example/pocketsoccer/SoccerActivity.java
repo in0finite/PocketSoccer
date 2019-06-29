@@ -230,7 +230,7 @@ public class SoccerActivity extends AppCompatActivity {
     }
 
     float getGoalWidth() {
-        return 80f;
+        return 120f;
     }
 
     float getGoalPostHeight() {
