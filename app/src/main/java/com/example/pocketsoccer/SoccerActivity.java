@@ -128,7 +128,9 @@ public class SoccerActivity extends AppCompatActivity {
 
         // for each movable: move it, constrain position, check for collision with goal posts
 
-        updateMovable(ballMovable, goalRects);
+        for (Movable movable : this.movables) {
+            updateMovable(movable, goalRects);
+        }
 
         // check for collision between movables, but only for those who didn't have collision with static object
 
