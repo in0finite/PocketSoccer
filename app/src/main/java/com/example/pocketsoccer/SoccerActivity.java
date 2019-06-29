@@ -14,10 +14,15 @@ public class SoccerActivity extends AppCompatActivity {
 
     public static int ballImageId;
     public static int fieldImageId;
-    public static Vec2 ballPos = new Vec2(70, 70);
+
+    public static Vec2 ballPos = new Vec2(150, 150);
     public static Vec2 ballSize = new Vec2(40, 40);
+    public static Vec2 ballVelocity = new Vec2(0, 0);
+
+    public static float deltaTime = 0.02f;
 
     MyTask mTask;
+    View mCustomView;
 
 
 
@@ -36,9 +41,9 @@ public class SoccerActivity extends AppCompatActivity {
         // create custom view
         //View inflatedView = LayoutInflater.from(this).inflate(R.layout.sample_soccer_field_view, null);
         //final View customView = ((ViewGroup) inflatedView).getChildAt(0);
-        final View customView = findViewById(R.id.soccerFieldView);
+        mCustomView = findViewById(R.id.soccerFieldView);
 
-        Log.i(MainActivity.LOG_TAG, "created custom view, class: " + customView.getClass().getName());
+        Log.i(MainActivity.LOG_TAG, "created custom view, class: " + mCustomView.getClass().getName());
 
         //customView.requestLayout();
 
@@ -46,11 +51,45 @@ public class SoccerActivity extends AppCompatActivity {
         mTask = new MyTask(new Runnable() {
             @Override
             public void run() {
-                //Log.i(MainActivity.LOG_TAG, "update");
-                customView.invalidate();
+                updateGame();
             }
         });
         mTask.execute();
+
+        // set random velocity for the ball
+        ballVelocity = new Vec2((float) Math.random() * 50, (float) Math.random() * 50);
+
+    }
+
+    void updateGame() {
+
+        //Log.i(MainActivity.LOG_TAG, "update");
+
+        ballPos.add(Vec2.multiply(ballVelocity, deltaTime));
+
+        // constrain position
+
+        if (ballPos.x < 0) {
+            ballPos.x = 0;
+            ballVelocity.x = Math.abs(ballVelocity.x);
+        }
+        else if (ballPos.x > mCustomView.getWidth()) {
+            ballPos.x = mCustomView.getWidth();
+            ballVelocity.x = - Math.abs(ballVelocity.x);
+        }
+
+        if (ballPos.y < 0) {
+            ballPos.y = 0;
+            ballVelocity.y = Math.abs(ballVelocity.y);
+        }
+        else if(ballPos.y > mCustomView.getHeight()) {
+            ballPos.y = mCustomView.getHeight();
+            ballVelocity.y = - Math.abs(ballVelocity.y);
+        }
+
+
+
+        mCustomView.invalidate();
 
     }
 

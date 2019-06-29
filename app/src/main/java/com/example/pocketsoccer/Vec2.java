@@ -7,4 +7,21 @@ public class Vec2 {
         this.x = x;
         this.y = y;
     }
+
+    Vec2 add(Vec2 other) {
+        this.x += other.x;
+        this.y += other.y;
+        return this;
+    }
+
+    Vec2 multiply(float f) {
+        this.x *= f;
+        this.y *= f;
+        return this;
+    }
+
+    public static Vec2 multiply(Vec2 vec2, float f) {
+        return new Vec2(vec2.x * f, vec2.y * f);
+    }
+
 }
