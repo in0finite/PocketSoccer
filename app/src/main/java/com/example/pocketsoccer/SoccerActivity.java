@@ -15,7 +15,7 @@ public class SoccerActivity extends AppCompatActivity {
     public static int ballImageId;
     public static int fieldImageId;
 
-    public static Vec2 ballPos = new Vec2(150, 150);
+    public static Vec2 ballPos = new Vec2(0, 0);
     public static Vec2 ballSize = new Vec2(40, 40);
     public static Vec2 ballVelocity = new Vec2(0, 0);
 
@@ -55,6 +55,9 @@ public class SoccerActivity extends AppCompatActivity {
             }
         });
         mTask.execute();
+
+        // reset ball position
+        ballPos = new Vec2(150, 150);
 
         // set random velocity for the ball
         ballVelocity = new Vec2((float) Math.random() * 500, (float) Math.random() * 500);
