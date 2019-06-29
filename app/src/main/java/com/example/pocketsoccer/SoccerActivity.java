@@ -2,6 +2,7 @@ package com.example.pocketsoccer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.RectF;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,14 +71,17 @@ public class SoccerActivity extends AppCompatActivity {
 
         ballPos.add(Vec2.multiply(ballVelocity, deltaTime));
 
+        float fieldWidth = mCustomView.getWidth();
+        float fieldHeight = mCustomView.getHeight();
+
         // constrain position
 
         if (ballPos.x < 0) {
             ballPos.x = 0;
             ballVelocity.x = Math.abs(ballVelocity.x);
         }
-        else if (ballPos.x > mCustomView.getWidth()) {
-            ballPos.x = mCustomView.getWidth();
+        else if (ballPos.x > fieldWidth) {
+            ballPos.x = fieldWidth;
             ballVelocity.x = - Math.abs(ballVelocity.x);
         }
 
@@ -85,16 +89,44 @@ public class SoccerActivity extends AppCompatActivity {
             ballPos.y = 0;
             ballVelocity.y = Math.abs(ballVelocity.y);
         }
-        else if(ballPos.y > mCustomView.getHeight()) {
-            ballPos.y = mCustomView.getHeight();
+        else if(ballPos.y > fieldHeight) {
+            ballPos.y = fieldHeight;
             ballVelocity.y = - Math.abs(ballVelocity.y);
         }
+
+        // check for collision between goals and ball
+
 
 
 
         mCustomView.invalidate();
 
     }
+
+    RectF getLeftGoalRect() {
+        return new RectF(0, getFieldHeight() / 3f, getGoalWidth(), getFieldHeight() * 2f / 3f);
+    }
+
+    float getGoalWidth() {
+        return 80f;
+    }
+
+    float getGoalPostHeight() {
+        return 15f;
+    }
+
+    float getFieldWidth() {
+        return mCustomView.getWidth();
+    }
+
+    float getFieldHeight() {
+        return mCustomView.getHeight();
+    }
+
+    boolean isPointInsideRect(Vec2 point, RectF rect) {
+
+    }
+
 
     @Override
     protected void onStop() {
