@@ -377,12 +377,12 @@ public class SoccerActivity extends AppCompatActivity {
 
         Vec2 pos, size;
 
-        pos = new Vec2(goalPostRect.left, goalPostRect.centerY());
+        pos = new Vec2(goalPostRect.left - 4f, goalPostRect.centerY());
         size = new Vec2(getGoalPostHeight(), getGoalPostHeight());
 
         movables[0] = new Movable(pos, size, Vec2.zero(), 0f);
 
-        pos = new Vec2(goalPostRect.right, goalPostRect.centerY());
+        pos = new Vec2(goalPostRect.right + 4f, goalPostRect.centerY());
         size = new Vec2(getGoalPostHeight(), getGoalPostHeight());
 
         movables[1] = new Movable(pos, size, Vec2.zero(), 0f);
