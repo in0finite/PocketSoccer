@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 public class NewGameActivity extends AppCompatActivity {
@@ -89,7 +90,7 @@ public class NewGameActivity extends AppCompatActivity {
     void setImageDimensions(ImageView imageView, boolean isSelected) {
         int height = isSelected ? 80 : 40;
         int width = height * 16 / 9;
-        imageView.setLayoutParams(new ViewGroup.LayoutParams(width, height));
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(width, height));
         //imageView.setMaxHeight(50);
     }
 
