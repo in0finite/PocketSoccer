@@ -330,9 +330,9 @@ public class SoccerActivity extends AppCompatActivity {
             boolean isLeftGoal = (insideGoalRect == goalRects[0]);
             System.out.printf("GOAL ! is left: %b\n", isLeftGoal);
             if (isLeftGoal)
-                scorePlayer1 ++;
-            else
                 scorePlayer2 ++;
+            else
+                scorePlayer1 ++;
         }
 
         mWasBallInsideGoalLastTime = isInsideAnyGoal;
