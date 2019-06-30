@@ -11,6 +11,9 @@ import android.widget.ScrollView;
 
 public class NewGameActivity extends AppCompatActivity {
 
+    private int mPlayer1ImageId = 0, mPlayer2ImageId = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,9 +26,25 @@ public class NewGameActivity extends AppCompatActivity {
 
         int[] imageIds = new int[]{R.drawable.en, R.drawable.fr, R.drawable.arg, R.drawable.br, R.drawable.es, R.drawable.ger, R.drawable.rs};
 
-        for (int imageId : imageIds) {
-            ((ViewGroup) viewById1.getChildAt(0)).addView(createFlag(imageId));
-            ((ViewGroup) viewById2.getChildAt(0)).addView(createFlag(imageId));
+        for (final int imageId : imageIds) {
+
+            ImageView imageView = createFlag(imageId);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mPlayer1ImageId = imageId;
+                }
+            });
+            ((ViewGroup) viewById1.getChildAt(0)).addView(imageView);
+
+            imageView = createFlag(imageId);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mPlayer2ImageId = imageId;
+                }
+            });
+            ((ViewGroup) viewById2.getChildAt(0)).addView(imageView);
         }
 
         // set button action
@@ -48,6 +67,8 @@ public class NewGameActivity extends AppCompatActivity {
 
     void startGame() {
         Intent intent = new Intent(this, SoccerActivity.class);
+        intent.putExtra("flagId1", mPlayer1ImageId);
+        intent.putExtra("flagId2", mPlayer2ImageId);
         startActivity(intent);
     }
 
