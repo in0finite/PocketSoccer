@@ -37,6 +37,10 @@ public class SoccerActivity extends AppCompatActivity {
 
     boolean mGameStartedSinceStartup = false;
 
+    public int currentPlayerTurn = 0;
+    float mTimeWhenTurnStarted = 0;
+    public static final float turnTime = 3f;
+
     MyTask mTask;
     View mCustomView;
 
@@ -80,6 +84,9 @@ public class SoccerActivity extends AppCompatActivity {
     }
 
     void startGame() {
+
+        this.currentPlayerTurn = 0;
+        mTimeWhenTurnStarted = getTimeSinceStartup();
 
         this.movables.clear();
 
@@ -144,6 +151,12 @@ public class SoccerActivity extends AppCompatActivity {
                 mGameStartedSinceStartup = true;
                 startGame();
             }
+        }
+
+        // check if new turn should start
+        if (mGameStartedSinceStartup && getTimeSinceStartup() - mTimeWhenTurnStarted >= turnTime) {
+            // time for this turn expired
+            nextTurn();
         }
 
         // update graphics
@@ -478,6 +491,12 @@ public class SoccerActivity extends AppCompatActivity {
                 (pos.y - size.y / 2f),
                 (pos.x + size.x / 2f),
                 (pos.y + size.y / 2f));
+    }
+
+
+    void nextTurn() {
+        this.currentPlayerTurn = (this.currentPlayerTurn + 1) % 2;
+        mTimeWhenTurnStarted = getTimeSinceStartup();
     }
 
 
