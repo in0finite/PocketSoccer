@@ -178,10 +178,14 @@ public class SoccerActivity extends AppCompatActivity {
             movable.hadCollisionWithStaticObject = true;
         }
 
-        // check for collision between goal posts and movable
+        // check for collision between goal posts/goal corners and movable
 
         goals_for: for (RectF goalRect : goalRects) {
+
             RectF[] goalPostRects = new RectF[]{getUpperGoalPost(goalRect), getLowerGoalPost(goalRect)};
+
+            // goal posts
+
             for (RectF goalPostRect : goalPostRects) {
                 RectF movableRect = rectFromPosAndSize(movable.pos, movable.size);
                 RectF movableRectClone = new RectF(movableRect);
@@ -199,6 +203,17 @@ public class SoccerActivity extends AppCompatActivity {
                     break goals_for;
                 }
             }
+
+            // goal corners
+            // create 2 corners for every post - to make it easier
+
+            for (RectF goalPostRect : goalPostRects) {
+                Movable[] cornersForGoalPost = getCornersForGoalPost(goalPostRect);
+                for (Movable cornerMovable : cornersForGoalPost) {
+                    checkCollisionBetweenCircles(movable, cornerMovable);
+                }
+            }
+
         }
 
     }
@@ -347,6 +362,27 @@ public class SoccerActivity extends AppCompatActivity {
         rect.top = rect.bottom;
         rect.bottom += getGoalPostHeight();
         return rect;
+    }
+
+    Movable[] getCornersForGoalPost(RectF goalPostRect) {
+
+        // 2 corners
+
+        Movable[] movables = new Movable[2];
+
+        Vec2 pos, size;
+
+        pos = new Vec2(goalPostRect.left, goalPostRect.centerY());
+        size = new Vec2(getGoalPostHeight(), getGoalPostHeight());
+
+        movables[0] = new Movable(pos, size, Vec2.zero(), 0f);
+
+        pos = new Vec2(goalPostRect.right, goalPostRect.centerY());
+        size = new Vec2(getGoalPostHeight(), getGoalPostHeight());
+
+        movables[1] = new Movable(pos, size, Vec2.zero(), 0f);
+
+        return movables;
     }
 
     float getGoalWidth() {
