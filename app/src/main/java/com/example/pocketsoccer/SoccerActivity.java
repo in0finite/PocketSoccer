@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 public class SoccerActivity extends AppCompatActivity {
 
     public static SoccerActivity instance = null;
+
+    long mStartingTime = 0;
 
     public static int ballImageId;
     public static int fieldImageId;
@@ -32,6 +35,8 @@ public class SoccerActivity extends AppCompatActivity {
 
     int scorePlayer1 = 0, scorePlayer2 = 0;
 
+    boolean mGameStartedSinceStartup = false;
+
     MyTask mTask;
     View mCustomView;
 
@@ -41,6 +46,8 @@ public class SoccerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         instance = this;
+
+        mStartingTime = SystemClock.elapsedRealtime();
 
         super.onCreate(savedInstanceState);
 
@@ -70,6 +77,16 @@ public class SoccerActivity extends AppCompatActivity {
         mTask.execute();
 
 
+    }
+
+    void startGame() {
+
+        this.movables.clear();
+
+
+        // reset ball position
+        this.ballMovable.pos = new Vec2(getFieldWidth() / 2f, getFieldHeight() / 2f);
+
         // set random velocity for the ball
         Vec2 ballVelocity = Vec2.randomNormalized();
         ballVelocity.multiply(800f);
@@ -78,9 +95,9 @@ public class SoccerActivity extends AppCompatActivity {
         // set mass
         this.ballMovable.mass = 80f;
 
-
         this.movables.add(this.ballMovable);
 
+        // create players
         createPlayers(R.drawable.br, R.drawable.ger);
 
     }
@@ -120,6 +137,13 @@ public class SoccerActivity extends AppCompatActivity {
 
         for (int i=0; i < kNumPhysicsSteps; i++) {
             updateGameSingleStep(goalRects);
+        }
+
+        if (!mGameStartedSinceStartup) {
+            if (getTimeSinceStartup() > 2f) {
+                mGameStartedSinceStartup = true;
+                startGame();
+            }
         }
 
         // update graphics
@@ -454,6 +478,11 @@ public class SoccerActivity extends AppCompatActivity {
                 (pos.y - size.y / 2f),
                 (pos.x + size.x / 2f),
                 (pos.y + size.y / 2f));
+    }
+
+
+    float getTimeSinceStartup() {
+        return (SystemClock.elapsedRealtime() - mStartingTime) / 1000f;
     }
 
 
