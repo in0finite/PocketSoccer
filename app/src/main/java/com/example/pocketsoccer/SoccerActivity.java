@@ -41,6 +41,8 @@ public class SoccerActivity extends AppCompatActivity {
     float mTimeWhenTurnStarted = 0;
     public static final float turnTime = 3f;
 
+    public Movable selectedMovable = null;
+
     MyTask mTask;
     View mCustomView;
 
@@ -87,6 +89,7 @@ public class SoccerActivity extends AppCompatActivity {
 
         this.currentPlayerTurn = 0;
         mTimeWhenTurnStarted = getTimeSinceStartup();
+        this.selectedMovable = null;
 
         this.movables.clear();
 
@@ -497,6 +500,18 @@ public class SoccerActivity extends AppCompatActivity {
     void nextTurn() {
         this.currentPlayerTurn = (this.currentPlayerTurn + 1) % 2;
         mTimeWhenTurnStarted = getTimeSinceStartup();
+    }
+
+    boolean isPlayerAI(int player) {
+
+    }
+
+    int getHumanPlayer() {
+
+    }
+
+    Movable getClosestPlayerDisk(int player) {
+
     }
 
 

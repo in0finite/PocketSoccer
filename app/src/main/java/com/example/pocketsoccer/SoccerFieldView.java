@@ -12,7 +12,10 @@ import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.core.view.MotionEventCompat;
 
 /**
  * TODO: document your custom view class.
@@ -216,6 +219,43 @@ public class SoccerFieldView extends View {
                 (int)(pos.y + size.y / 2f));
         drawable.draw(canvas);
     }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+
+        int action = event.getAction();
+
+        switch(action) {
+            case (MotionEvent.ACTION_DOWN) :
+
+                // select closest owned disk
+                Movable closestPlayerDisk = SoccerActivity.instance.getClosestPlayerDisk(SoccerActivity.instance.getHumanPlayer());
+                SoccerActivity.instance.selectedMovable = closestPlayerDisk;
+
+                return true;
+            case (MotionEvent.ACTION_MOVE) :
+
+                return true;
+            case (MotionEvent.ACTION_UP) :
+
+                SoccerActivity.instance.selectedMovable = null;
+
+                return true;
+            case (MotionEvent.ACTION_CANCEL) :
+
+                SoccerActivity.instance.selectedMovable = null;
+
+                return true;
+            case (MotionEvent.ACTION_OUTSIDE) :
+
+                return true;
+            default :
+                return super.onTouchEvent(event);
+        }
+
+    }
+
 
     /**
      * Gets the example string attribute value.
