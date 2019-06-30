@@ -3,13 +3,9 @@ package com.example.pocketsoccer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.RectF;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -189,7 +185,7 @@ public class SoccerActivity extends AppCompatActivity {
             for (RectF goalPostRect : goalPostRects) {
                 RectF movableRect = rectFromPosAndSize(movable.pos, movable.size);
                 RectF movableRectClone = new RectF(movableRect);
-                if (resolveCollisionBetweenCircleAndGoalPost(movableRect, goalPostRect, movable.velocity)) {
+                if (checkCollisionBetweenCircleAndGoalPost(movableRect, goalPostRect, movable.velocity)) {
                     // collision happened
 
                     movable.hadCollisionWithStaticObject = true;
@@ -207,7 +203,7 @@ public class SoccerActivity extends AppCompatActivity {
 
     }
 
-    boolean resolveCollisionBetweenCircleAndGoalPost(RectF circleRect, RectF goalPostRect, Vec2 velocity) {
+    boolean checkCollisionBetweenCircleAndGoalPost(RectF circleRect, RectF goalPostRect, Vec2 velocity) {
 
         if (circleRect.intersects(goalPostRect.left, goalPostRect.top, goalPostRect.right, goalPostRect.bottom)) {
 
