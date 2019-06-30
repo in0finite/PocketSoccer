@@ -57,6 +57,7 @@ public class NewGameActivity extends AppCompatActivity {
                     onSelectedImage1(imageView, imageId);
                 }
             });
+            this.setImageDimensions(imageView, mPlayer1ImageId == imageId);
             mFlagsContainer1.addView(imageView);
 
             final ImageView imageView2 = createFlag(imageId);
@@ -66,6 +67,7 @@ public class NewGameActivity extends AppCompatActivity {
                     onSelectedImage2(imageView2, imageId);
                 }
             });
+            this.setImageDimensions(imageView2, mPlayer2ImageId == imageId);
             mFlagsContainer2.addView(imageView2);
 
         }
