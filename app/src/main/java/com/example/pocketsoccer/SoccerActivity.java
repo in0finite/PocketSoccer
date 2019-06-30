@@ -157,21 +157,21 @@ public class SoccerActivity extends AppCompatActivity {
 
         Vec2 posBeforeConstraining = movable.pos.clone();
 
-        if (movable.pos.x < 0) {
-            movable.pos.x = 0;
+        if (movable.pos.x <= 0) {
+            movable.pos.x = 1;
             movable.velocity.x = Math.abs(movable.velocity.x);
         }
-        else if (movable.pos.x > fieldWidth) {
-            movable.pos.x = fieldWidth;
+        else if (movable.pos.x >= fieldWidth) {
+            movable.pos.x = fieldWidth - 1;
             movable.velocity.x = - Math.abs(movable.velocity.x);
         }
 
-        if (movable.pos.y < 0) {
-            movable.pos.y = 0;
+        if (movable.pos.y <= 0) {
+            movable.pos.y = 1;
             movable.velocity.y = Math.abs(movable.velocity.y);
         }
-        else if(movable.pos.y > fieldHeight) {
-            movable.pos.y = fieldHeight;
+        else if(movable.pos.y >= fieldHeight) {
+            movable.pos.y = fieldHeight - 1;
             movable.velocity.y = - Math.abs(movable.velocity.y);
         }
 
