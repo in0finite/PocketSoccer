@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30px"
         android:layout_weight="1"
         android:text="Name1" />
 
@@ -21,6 +21,7 @@
         android:layout_weight="1"
         android:ems="10"
         android:inputType="textPersonName"
+        android:singleLine="true"
         android:text="Player 1" />
 
     <CheckBox
@@ -60,7 +61,7 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30px"
         android:layout_weight="1"
         android:text="Name2" />
 
@@ -71,6 +72,7 @@
         android:layout_weight="1"
         android:ems="10"
         android:inputType="textPersonName"
+        android:singleLine="true"
         android:text="Player 2" />
 
     <CheckBox
@@ -78,6 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:checked="true"
         android:text="Is AI ?" />
 
     <ScrollView
