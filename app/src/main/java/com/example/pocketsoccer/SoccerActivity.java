@@ -253,8 +253,8 @@ public class SoccerActivity extends AppCompatActivity {
                     // apply new position
                     //movable.pos = new Vec2(movableRect.centerX(), movableRect.centerY());
                     movable.pos.y += mPosDeltaAfterCollision;
-                    System.out.printf("ball position after collision: %s, original ball rect %s, new ball rect %s\n",
-                            movable.pos.toString(), movableRectClone.toString(), movableRect.toString());
+//                    System.out.printf("ball position after collision: %s, original ball rect %s, new ball rect %s\n",
+//                            movable.pos.toString(), movableRectClone.toString(), movableRect.toString());
 
                     break goals_for;
                 }
@@ -299,8 +299,8 @@ public class SoccerActivity extends AppCompatActivity {
             //circleRect = new RectF(circleRect.left, circleRect.top + delta, circleRect.right, circleRect.bottom + delta);
             mPosDeltaAfterCollision = delta;
 
-            System.out.printf("collision between circle and goal post - circle rect: %s, goal post rect: %s, original velocity %s, new velocity: %s, delta %f, is from upper side: %b\n",
-                    circleRect.toString(), goalPostRect.toString(), originalVelocity.toString(), velocity.toString(), delta, isFromUpperSide);
+//            System.out.printf("collision between circle and goal post - circle rect: %s, goal post rect: %s, original velocity %s, new velocity: %s, delta %f, is from upper side: %b\n",
+//                    circleRect.toString(), goalPostRect.toString(), originalVelocity.toString(), velocity.toString(), delta, isFromUpperSide);
 
             return true;
         }
