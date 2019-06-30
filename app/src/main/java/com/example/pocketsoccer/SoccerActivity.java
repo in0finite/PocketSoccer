@@ -30,6 +30,8 @@ public class SoccerActivity extends AppCompatActivity {
     boolean mWasBallInsideGoalLastTime = false;
     float mPosDeltaAfterCollision = 0f;
 
+    int scorePlayer1 = 0, scorePlayer2 = 0;
+
     MyTask mTask;
     View mCustomView;
 
@@ -285,6 +287,10 @@ public class SoccerActivity extends AppCompatActivity {
         if (isInsideAnyGoal && !mWasBallInsideGoalLastTime) {
             boolean isLeftGoal = (insideGoalRect == goalRects[0]);
             System.out.printf("GOAL ! is left: %b\n", isLeftGoal);
+            if (isLeftGoal)
+                scorePlayer1 ++;
+            else
+                scorePlayer2 ++;
         }
 
         mWasBallInsideGoalLastTime = isInsideAnyGoal;

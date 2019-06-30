@@ -79,7 +79,7 @@ public class SoccerFieldView extends View {
         // Set up a default TextPaint object
         mTextPaint = new TextPaint();
         mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
-        mTextPaint.setTextAlign(Paint.Align.LEFT);
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
 
         ballPaint = new Paint();
         fieldPaint = new Paint();
@@ -101,14 +101,14 @@ public class SoccerFieldView extends View {
     }
 
     private void invalidateTextPaintAndMeasurements() {
-        /*
-        mTextPaint.setTextSize(mExampleDimension);
-        mTextPaint.setColor(mExampleColor);
-        mTextWidth = mTextPaint.measureText(mExampleString);
+
+        mTextPaint.setTextSize(20);
+        //mTextPaint.setColor(mExampleColor);
+        //mTextWidth = mTextPaint.measureText("0");
 
         Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
         mTextHeight = fontMetrics.bottom;
-        */
+
     }
 
     @Override
@@ -184,6 +184,13 @@ public class SoccerFieldView extends View {
                 }
             }
         }
+
+        // draw score
+
+        float scorePosY = 5 + mTextHeight / 2f;
+        canvas.drawText(String.valueOf(SoccerActivity.instance.scorePlayer1), getWidth() * 0.4f, scorePosY, mTextPaint);
+        canvas.drawText(String.valueOf(SoccerActivity.instance.scorePlayer2), getWidth() * 0.6f, scorePosY, mTextPaint);
+
 
     }
 
