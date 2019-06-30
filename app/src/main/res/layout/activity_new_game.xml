@@ -24,7 +24,7 @@
         android:text="Player 1" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBoxIsAI1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -74,7 +74,7 @@
         android:text="Player 2" />
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/checkBoxIsAI2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -16,6 +17,7 @@ public class NewGameActivity extends AppCompatActivity {
 
     private ViewGroup mFlagsContainer1, mFlagsContainer2;
     private EditText mEditTextPlayerName1, mEditTextPlayerName2;
+    private CheckBox mCheckBoxIsAI1, mCheckBoxIsAI2;
 
 
 
@@ -29,6 +31,9 @@ public class NewGameActivity extends AppCompatActivity {
 
         mEditTextPlayerName1 = this.findViewById(R.id.editTextPlayer1Name);
         mEditTextPlayerName2 = this.findViewById(R.id.editTextPlayer2Name);
+
+        mCheckBoxIsAI1 = this.findViewById(R.id.checkBoxIsAI1);
+        mCheckBoxIsAI2 = this.findViewById(R.id.checkBoxIsAI2);
 
         // populate scroll views with flags
 
@@ -83,6 +88,8 @@ public class NewGameActivity extends AppCompatActivity {
         intent.putExtra("flagId2", mPlayer2ImageId);
         intent.putExtra("name1", mEditTextPlayerName1.getText().toString());
         intent.putExtra("name2", mEditTextPlayerName2.getText().toString());
+        intent.putExtra("isAI1", mCheckBoxIsAI1.isChecked());
+        intent.putExtra("isAI2", mCheckBoxIsAI2.isChecked());
         startActivity(intent);
     }
 
