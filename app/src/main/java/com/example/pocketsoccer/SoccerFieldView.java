@@ -80,6 +80,8 @@ public class SoccerFieldView extends View {
         mTextPaint = new TextPaint();
         mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
+        mTextPaint.setStrokeWidth(4f);
+        mTextPaint.setTextSize(28);
 
         ballPaint = new Paint();
         fieldPaint = new Paint();
@@ -102,7 +104,6 @@ public class SoccerFieldView extends View {
 
     private void invalidateTextPaintAndMeasurements() {
 
-        mTextPaint.setTextSize(20);
         //mTextPaint.setColor(mExampleColor);
         //mTextWidth = mTextPaint.measureText("0");
 
@@ -187,7 +188,7 @@ public class SoccerFieldView extends View {
 
         // draw score
 
-        float scorePosY = 5 + mTextHeight / 2f;
+        float scorePosY = 5 + 50;
         canvas.drawText(String.valueOf(SoccerActivity.instance.scorePlayer1), getWidth() * 0.4f, scorePosY, mTextPaint);
         canvas.drawText(String.valueOf(SoccerActivity.instance.scorePlayer2), getWidth() * 0.6f, scorePosY, mTextPaint);
 
