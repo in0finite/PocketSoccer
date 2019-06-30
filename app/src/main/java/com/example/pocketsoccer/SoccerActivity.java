@@ -2,6 +2,7 @@ package com.example.pocketsoccer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -18,6 +19,10 @@ public class SoccerActivity extends AppCompatActivity {
 
     public static int ballImageId;
     public static int fieldImageId;
+
+    public int flagIdPlayer1 = 0, flagIdPlayer2 = 0;
+    public String namePlayer1 = "", namePlayer2 = "";
+    public boolean isPlayer1AI = false, isPlayer2AI = false;
 
     public Movable ballMovable = new Ball(new Vec2(150, 150), new Vec2(40, 40), Vec2.zero());
     //public Vec2 ballPos = new Vec2(0, 0);
@@ -54,6 +59,16 @@ public class SoccerActivity extends AppCompatActivity {
         instance = this;
 
         mStartingTime = SystemClock.elapsedRealtime();
+
+        // get args from intent
+        Intent intent = getIntent();
+        this.flagIdPlayer1 = intent.getIntExtra("flagId1", 0);
+        this.flagIdPlayer2 = intent.getIntExtra("flagId2", 0);
+        this.namePlayer1 = intent.getStringExtra("name1");
+        this.namePlayer2 = intent.getStringExtra("name2");
+        this.isPlayer1AI = intent.getBooleanExtra("isAI1", false);
+        this.isPlayer2AI = intent.getBooleanExtra("isAI2", false);
+
 
         super.onCreate(savedInstanceState);
 
