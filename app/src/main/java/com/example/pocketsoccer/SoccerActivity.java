@@ -123,7 +123,7 @@ public class SoccerActivity extends AppCompatActivity {
         this.movables.add(this.ballMovable);
 
         // create players
-        createPlayers(R.drawable.br, R.drawable.ger);
+        createPlayers(this.flagIdPlayer1, this.flagIdPlayer2);
 
     }
 
