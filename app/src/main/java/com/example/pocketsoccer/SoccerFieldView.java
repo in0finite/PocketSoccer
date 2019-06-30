@@ -35,6 +35,8 @@ public class SoccerFieldView extends View {
 
     Paint ballPaint, fieldPaint, goalPostPaint, goalCornerPaint, scoreRectPaint, selectedDiskPaint;
 
+    Vec2 touchStartPos = new Vec2();
+
 
 
     public SoccerFieldView(Context context) {
@@ -238,11 +240,15 @@ public class SoccerFieldView extends View {
 
         int action = event.getAction();
 
+        Vec2 touchPos = new Vec2(event.getX(), event.getY());
+
         switch(action) {
             case (MotionEvent.ACTION_DOWN) :
 
+                this.touchStartPos = touchPos;
+
                 // select closest owned disk
-                Movable closestPlayerDisk = SoccerActivity.instance.getClosestPlayerDisk(new Vec2(event.getX(), event.getY()), SoccerActivity.instance.getHumanPlayer());
+                Movable closestPlayerDisk = SoccerActivity.instance.getClosestPlayerDisk(touchPos, SoccerActivity.instance.getHumanPlayer());
                 SoccerActivity.instance.selectedMovable = closestPlayerDisk;
 
                 return true;
@@ -250,6 +256,20 @@ public class SoccerFieldView extends View {
 
                 return true;
             case (MotionEvent.ACTION_UP) :
+
+                if (SoccerActivity.instance.selectedMovable != null && SoccerActivity.instance.selectedMovable.player == SoccerActivity.instance.currentPlayerTurn) {
+
+                    Vec2 diff = Vec2.substract(touchPos, this.touchStartPos);
+                    Vec2 dir = diff.normalized();
+                    float strength = diff.length() / 1f;
+                    if (strength > 400)
+                        strength = 400;
+                    Vec2 velocityToAdd = Vec2.multiply(dir, strength);
+                    SoccerActivity.instance.selectedMovable.velocity.add(velocityToAdd);
+
+                    // turn is finished
+                    SoccerActivity.instance.nextTurn();
+                }
 
                 SoccerActivity.instance.selectedMovable = null;
 
