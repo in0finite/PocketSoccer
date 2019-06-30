@@ -25,7 +25,7 @@
                 android:layout_height="30px"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Name1" />
+                android:text="Name:" />
 
             <EditText
                 android:id="@+id/editTextPlayer1Name"
@@ -84,7 +84,7 @@
                 android:layout_height="30px"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Name2" />
+                android:text="Name:" />
 
             <EditText
                 android:id="@+id/editTextPlayer2Name"
