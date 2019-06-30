@@ -412,14 +412,30 @@ public class SoccerActivity extends AppCompatActivity {
     }
 
     static boolean circleIntersectsRect(Vec2 center, float radius, RectF rect) {
-        // test all 4 points
-        Vec2[] points = new Vec2[]{new Vec2(rect.left, rect.top), new Vec2(rect.right, rect.top), new Vec2(rect.left, rect.bottom),
-                new Vec2(rect.right, rect.bottom)};
-        for (Vec2 point : points) {
-            if (isPointInCircle(center, radius, point))
-                return true;
-        }
-        return false;
+
+//        // test all 4 points
+//        Vec2[] points = new Vec2[]{new Vec2(rect.left, rect.top), new Vec2(rect.right, rect.top), new Vec2(rect.left, rect.bottom),
+//                new Vec2(rect.right, rect.bottom)};
+//        for (Vec2 point : points) {
+//            if (isPointInCircle(center, radius, point))
+//                return true;
+//        }
+//        return false;
+
+        Vec2 circleDistance = new Vec2();
+        circleDistance.x = Math.abs(center.x - rect.centerX());
+        circleDistance.y = Math.abs(center.y - rect.centerY());
+
+        if (circleDistance.x > (rect.width()/2 + radius)) { return false; }
+        if (circleDistance.y > (rect.height()/2 + radius)) { return false; }
+
+        if (circleDistance.x <= (rect.width()/2)) { return true; }
+        if (circleDistance.y <= (rect.height()/2)) { return true; }
+
+        double cornerDistance_sq = Math.pow(circleDistance.x - rect.width()/2f, 2f) +
+                Math.pow(circleDistance.y - rect.height()/2f, 2f);
+
+        return ( cornerDistance_sq <= Math.pow(radius, 2f) );
     }
 
     static boolean isPointInCircle(Vec2 center, float radius, Vec2 point) {
