@@ -60,7 +60,7 @@ public class NewGameActivity extends AppCompatActivity {
             mFlagsContainer1.addView(imageView);
 
             final ImageView imageView2 = createFlag(imageId);
-            imageView.setOnClickListener(new View.OnClickListener() {
+            imageView2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     onSelectedImage2(imageView2, imageId);
