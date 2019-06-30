@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
@@ -13,16 +14,26 @@ public class NewGameActivity extends AppCompatActivity {
 
     private int mPlayer1ImageId = 0, mPlayer2ImageId = 0;
 
+    private ViewGroup mFlagsContainer1, mFlagsContainer2;
+    private EditText mEditTextPlayerName1, mEditTextPlayerName2;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
 
-        ScrollView viewById1 = this.findViewById(R.id.scrollView1);
-        ScrollView viewById2 = this.findViewById(R.id.scrollView2);
+        mFlagsContainer1 = this.findViewById(R.id.flagsContainer1);
+        mFlagsContainer2 = this.findViewById(R.id.flagsContainer2);
+
+        mEditTextPlayerName1 = this.findViewById(R.id.editTextPlayer1Name);
+        mEditTextPlayerName2 = this.findViewById(R.id.editTextPlayer2Name);
 
         // populate scroll views with flags
+
+        mFlagsContainer1.removeAllViews();
+        mFlagsContainer2.removeAllViews();
 
         int[] imageIds = new int[]{R.drawable.en, R.drawable.fr, R.drawable.arg, R.drawable.br, R.drawable.es, R.drawable.ger, R.drawable.rs};
 
@@ -35,7 +46,7 @@ public class NewGameActivity extends AppCompatActivity {
                     mPlayer1ImageId = imageId;
                 }
             });
-            ((ViewGroup) viewById1.getChildAt(0)).addView(imageView);
+            mFlagsContainer1.addView(imageView);
 
             imageView = createFlag(imageId);
             imageView.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +55,8 @@ public class NewGameActivity extends AppCompatActivity {
                     mPlayer2ImageId = imageId;
                 }
             });
-            ((ViewGroup) viewById2.getChildAt(0)).addView(imageView);
+            mFlagsContainer2.addView(imageView);
+
         }
 
         // set button action
@@ -69,6 +81,8 @@ public class NewGameActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SoccerActivity.class);
         intent.putExtra("flagId1", mPlayer1ImageId);
         intent.putExtra("flagId2", mPlayer2ImageId);
+        intent.putExtra("name1", mEditTextPlayerName1.getText().toString());
+        intent.putExtra("name2", mEditTextPlayerName2.getText().toString());
         startActivity(intent);
     }
 

@@ -15,13 +15,13 @@
         android:text="Name1" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextPlayer1Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="Player 1" />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -37,6 +37,7 @@
         android:layout_weight="1">
 
         <LinearLayout
+            android:id="@+id/flagsContainer1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -64,13 +65,13 @@
         android:text="Name2" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editTextPlayer2Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="Player 2" />
 
     <CheckBox
         android:id="@+id/checkBox2"
@@ -86,9 +87,10 @@
         android:layout_weight="1">
 
         <LinearLayout
+            android:id="@+id/flagsContainer2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/imageView3"
