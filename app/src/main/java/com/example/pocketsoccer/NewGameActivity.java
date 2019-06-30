@@ -35,6 +35,10 @@ public class NewGameActivity extends AppCompatActivity {
         mCheckBoxIsAI1 = this.findViewById(R.id.checkBoxIsAI1);
         mCheckBoxIsAI2 = this.findViewById(R.id.checkBoxIsAI2);
 
+        // set default flags
+        mPlayer1ImageId = R.drawable.br;
+        mPlayer2ImageId = R.drawable.ger;
+
         // populate scroll views with flags
 
         mFlagsContainer1.removeAllViews();
