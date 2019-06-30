@@ -33,7 +33,7 @@ public class SoccerFieldView extends View {
     Drawable ballDrawable;
     Drawable fieldDrawable;
 
-    Paint ballPaint, fieldPaint, goalPostPaint, goalCornerPaint, scoreRectPaint;
+    Paint ballPaint, fieldPaint, goalPostPaint, goalCornerPaint, scoreRectPaint, selectedDiskPaint;
 
 
 
@@ -101,6 +101,12 @@ public class SoccerFieldView extends View {
         scoreRectPaint.setStyle(Paint.Style.STROKE);
         scoreRectPaint.setStrokeWidth(3f);
         scoreRectPaint.setColor(Color.BLACK);
+
+        selectedDiskPaint = new Paint();
+        selectedDiskPaint.setStyle(Paint.Style.STROKE);
+        selectedDiskPaint.setStrokeWidth(5f);
+        selectedDiskPaint.setColor(Color.MAGENTA);
+
 
         ballDrawable = getResources().getDrawable(SoccerActivity.ballImageId);
         fieldDrawable = getResources().getDrawable(SoccerActivity.fieldImageId);
@@ -192,6 +198,12 @@ public class SoccerFieldView extends View {
                     canvas.drawCircle(cornerMovable.pos.x, cornerMovable.pos.y, cornerMovable.getRadius(), goalCornerPaint);
                 }
             }
+        }
+
+        // draw circle around selected movable
+        if (SoccerActivity.instance.selectedMovable != null) {
+            canvas.drawCircle(SoccerActivity.instance.selectedMovable.pos.x, SoccerActivity.instance.selectedMovable.pos.y,
+                    SoccerActivity.instance.selectedMovable.getRadius(), selectedDiskPaint);
         }
 
         // draw score
