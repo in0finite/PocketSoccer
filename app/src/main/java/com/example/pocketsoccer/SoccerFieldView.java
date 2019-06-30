@@ -189,8 +189,17 @@ public class SoccerFieldView extends View {
         // draw score
 
         float scorePosY = 5 + 50;
-        canvas.drawText(String.valueOf(SoccerActivity.instance.scorePlayer1), getWidth() * 0.4f, scorePosY, mTextPaint);
-        canvas.drawText(String.valueOf(SoccerActivity.instance.scorePlayer2), getWidth() * 0.6f, scorePosY, mTextPaint);
+        float scorePosX1 = getWidth() * 0.4f;
+        float scorePosX2 = getWidth() * 0.6f;
+        canvas.drawText(String.valueOf(SoccerActivity.instance.scorePlayer1), scorePosX1, scorePosY, mTextPaint);
+        canvas.drawText(String.valueOf(SoccerActivity.instance.scorePlayer2), scorePosX2, scorePosY, mTextPaint);
+
+        // draw rectangle around score of current player
+
+        float scorePosXOfCurrentPlayer = SoccerActivity.instance.currentPlayerTurn == 0 ? scorePosX1 : scorePosX2;
+        float rectAroundScoreSize = 100;
+        canvas.drawRect(new RectF(scorePosXOfCurrentPlayer - rectAroundScoreSize * 0.5f, scorePosY - rectAroundScoreSize * 0.5f,
+                scorePosXOfCurrentPlayer + rectAroundScoreSize * 0.5f, scorePosY + rectAroundScoreSize * 0.5f), mTextPaint);
 
 
     }
