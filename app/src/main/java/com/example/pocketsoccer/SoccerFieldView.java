@@ -30,7 +30,7 @@ public class SoccerFieldView extends View {
     Drawable ballDrawable;
     Drawable fieldDrawable;
 
-    Paint ballPaint, fieldPaint, goalPostPaint;
+    Paint ballPaint, fieldPaint, goalPostPaint, goalCornerPaint;
 
 
 
@@ -83,9 +83,14 @@ public class SoccerFieldView extends View {
 
         ballPaint = new Paint();
         fieldPaint = new Paint();
+
         goalPostPaint = new Paint();
         goalPostPaint.setColor(Color.WHITE);
         goalPostPaint.setStrokeWidth(3f);
+
+        goalCornerPaint = new Paint();
+        goalCornerPaint.setColor(Color.RED);
+        goalCornerPaint.setStrokeWidth(3);
 
         ballDrawable = getResources().getDrawable(SoccerActivity.ballImageId);
         fieldDrawable = getResources().getDrawable(SoccerActivity.fieldImageId);
@@ -168,12 +173,15 @@ public class SoccerFieldView extends View {
             drawDrawable(ballDrawable, SoccerActivity.instance.ballMovable.pos, SoccerActivity.instance.ballMovable.size, canvas);
         }
 
-        // draw goal posts
+        // draw goal posts and goal corners
         RectF[] goalRects = new RectF[]{SoccerActivity.instance.getLeftGoalRect(), SoccerActivity.instance.getRightGoalRect()};
         for (RectF goalRect : goalRects) {
             RectF[] goalPostRects = new RectF[]{SoccerActivity.instance.getUpperGoalPost(goalRect), SoccerActivity.instance.getLowerGoalPost(goalRect)};
             for (RectF goalPostRect : goalPostRects) {
                 canvas.drawRect(goalPostRect, goalPostPaint);
+                for (Movable cornerMovable : SoccerActivity.instance.getCornersForGoalPost(goalPostRect)) {
+                    canvas.drawCircle(cornerMovable.pos.x, cornerMovable.pos.y, cornerMovable.getRadius(), goalCornerPaint);
+                }
             }
         }
 

@@ -210,7 +210,7 @@ public class SoccerActivity extends AppCompatActivity {
             for (RectF goalPostRect : goalPostRects) {
                 Movable[] cornersForGoalPost = getCornersForGoalPost(goalPostRect);
                 for (Movable cornerMovable : cornersForGoalPost) {
-                    checkCollisionBetweenCircles(movable, cornerMovable);
+                    //checkCollisionBetweenCircles(movable, cornerMovable);
                 }
             }
 
