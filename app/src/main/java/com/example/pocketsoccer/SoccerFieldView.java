@@ -266,9 +266,9 @@ public class SoccerFieldView extends View {
 
                     Vec2 diff = Vec2.substract(touchPos, this.touchStartPos);
                     Vec2 dir = diff.normalized();
-                    float strength = diff.length() / 1f;
-                    if (strength > 400)
-                        strength = 400;
+                    float strength = diff.length() * 2f;
+                    if (strength > 1000)
+                        strength = 1000;
                     SoccerActivity.instance.selectedMovable.velocity = Vec2.multiply(dir, strength);
 
                     System.out.printf("motion action up - strength: %f\n", strength);
