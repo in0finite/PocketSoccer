@@ -204,11 +204,15 @@ public class SoccerActivity extends AppCompatActivity {
 
     boolean resolveCollisionBetweenCircleAndGoalPost(RectF circleRect, RectF goalPostRect, Vec2 velocity) {
 
-        if (circleRect.intersect(goalPostRect)) {
+        if (circleRect.intersects(goalPostRect.left, goalPostRect.top, goalPostRect.right, goalPostRect.bottom)) {
+
             boolean isFromUpperSide = false;
 
             Vec2 originalVelocity = velocity.clone();
             float delta = 0f;
+
+            //float circleTop = circlePos.y + circleRadius;
+            //float circleBottom = circlePos.y - circleRadius;
 
             if (velocity.y > 0) {
                 // collision from upper side
