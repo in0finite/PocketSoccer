@@ -104,6 +104,7 @@ public class NewGameActivity extends AppCompatActivity {
 
         this.setImageDimensions(imageView, true);
 
+        mFlagsContainer1.requestLayout();
     }
 
     void onSelectedImage2(ImageView imageView, int imageResId) {
@@ -117,6 +118,7 @@ public class NewGameActivity extends AppCompatActivity {
 
         this.setImageDimensions(imageView, true);
 
+        mFlagsContainer2.requestLayout();
     }
 
     void startGame() {
