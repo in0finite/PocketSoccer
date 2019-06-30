@@ -315,6 +315,8 @@ public class SoccerActivity extends AppCompatActivity {
         if (movableA.mass == 0 && movableB.mass == 0)
             return false;
 
+        boolean oneHasZeroMass = (movableA.mass == 0 || movableB.mass == 0);
+
         float distance = Vec2.distance(movableA.pos, movableB.pos);
 
         if (distance < movableA.getRadius() + movableB.getRadius()) {
@@ -330,8 +332,9 @@ public class SoccerActivity extends AppCompatActivity {
             movableA.velocity.add( Vec2.multiply(diffNormalized, relativeVelocity / 2f));
             movableB.velocity.add( Vec2.multiply(diffNormalized, - relativeVelocity / 2f));
 
-            movableA.pos.add( Vec2.multiply(diffNormalized, delta / 2f) );
-            movableB.pos.add( Vec2.multiply(diffNormalized, - delta / 2f) );
+            float positionFactor = oneHasZeroMass ? 2f : 1f;
+            movableA.pos.add( Vec2.multiply(diffNormalized, delta / 2f * positionFactor) );
+            movableB.pos.add( Vec2.multiply(diffNormalized, - delta / 2f * positionFactor) );
 
             movableA.hadCollisionWithStaticObject = true;
             movableB.hadCollisionWithStaticObject = true;
