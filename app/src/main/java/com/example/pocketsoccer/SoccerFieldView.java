@@ -80,8 +80,8 @@ public class SoccerFieldView extends View {
         mTextPaint = new TextPaint();
         mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
-        mTextPaint.setStrokeWidth(4f);
-        mTextPaint.setTextSize(28);
+        mTextPaint.setStrokeWidth(5f);
+        mTextPaint.setTextSize(35);
 
         ballPaint = new Paint();
         fieldPaint = new Paint();
@@ -92,7 +92,7 @@ public class SoccerFieldView extends View {
 
         goalCornerPaint = new Paint();
         goalCornerPaint.setColor(Color.RED);
-        goalCornerPaint.setStrokeWidth(3);
+        goalCornerPaint.setStrokeWidth(3f);
 
         ballDrawable = getResources().getDrawable(SoccerActivity.ballImageId);
         fieldDrawable = getResources().getDrawable(SoccerActivity.fieldImageId);
