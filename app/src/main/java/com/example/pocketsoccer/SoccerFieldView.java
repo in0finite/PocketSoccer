@@ -30,7 +30,7 @@ public class SoccerFieldView extends View {
     Drawable ballDrawable;
     Drawable fieldDrawable;
 
-    Paint ballPaint, fieldPaint, goalPostPaint, goalCornerPaint;
+    Paint ballPaint, fieldPaint, goalPostPaint, goalCornerPaint, scoreRectPaint;
 
 
 
@@ -93,6 +93,11 @@ public class SoccerFieldView extends View {
         goalCornerPaint = new Paint();
         goalCornerPaint.setColor(Color.RED);
         goalCornerPaint.setStrokeWidth(3f);
+
+        scoreRectPaint = new Paint();
+        scoreRectPaint.setStyle(Paint.Style.STROKE);
+        scoreRectPaint.setStrokeWidth(3f);
+        scoreRectPaint.setColor(Color.BLACK);
 
         ballDrawable = getResources().getDrawable(SoccerActivity.ballImageId);
         fieldDrawable = getResources().getDrawable(SoccerActivity.fieldImageId);
@@ -199,7 +204,7 @@ public class SoccerFieldView extends View {
         float scorePosXOfCurrentPlayer = SoccerActivity.instance.currentPlayerTurn == 0 ? scorePosX1 : scorePosX2;
         float rectAroundScoreSize = 100;
         canvas.drawRect(new RectF(scorePosXOfCurrentPlayer - rectAroundScoreSize * 0.5f, scorePosY - rectAroundScoreSize * 0.5f,
-                scorePosXOfCurrentPlayer + rectAroundScoreSize * 0.5f, scorePosY + rectAroundScoreSize * 0.5f), mTextPaint);
+                scorePosXOfCurrentPlayer + rectAroundScoreSize * 0.5f, scorePosY + rectAroundScoreSize * 0.5f), scoreRectPaint);
 
 
     }
