@@ -332,8 +332,9 @@ public class SoccerActivity extends AppCompatActivity {
 
             float relativeVelocity = Vec2.substract(movableA.velocity, movableB.velocity).length();
 
-            movableA.velocity.add( Vec2.multiply(diffNormalized, relativeVelocity / 2f));
-            movableB.velocity.add( Vec2.multiply(diffNormalized, - relativeVelocity / 2f));
+            float velocityFactor = oneHasZeroMass ? 2f : 1f;
+            movableA.velocity.add( Vec2.multiply(diffNormalized, relativeVelocity / 2f * velocityFactor));
+            movableB.velocity.add( Vec2.multiply(diffNormalized, - relativeVelocity / 2f * velocityFactor));
 
             float positionFactor = oneHasZeroMass ? 2f : 1f;
             movableA.pos.add( Vec2.multiply(diffNormalized, delta / 2f * positionFactor) );
