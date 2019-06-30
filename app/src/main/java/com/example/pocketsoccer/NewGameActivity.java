@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 public class NewGameActivity extends AppCompatActivity {
 
     private int mPlayer1ImageId = 0, mPlayer2ImageId = 0;
+    private ImageView mSelectImage1, mSelectImage2;
 
     private ViewGroup mFlagsContainer1, mFlagsContainer2;
     private EditText mEditTextPlayerName1, mEditTextPlayerName2;
@@ -48,23 +49,23 @@ public class NewGameActivity extends AppCompatActivity {
 
         for (final int imageId : imageIds) {
 
-            ImageView imageView = createFlag(imageId);
+            final ImageView imageView = createFlag(imageId);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mPlayer1ImageId = imageId;
+                    onSelectedImage1(imageView, imageId);
                 }
             });
             mFlagsContainer1.addView(imageView);
 
-            imageView = createFlag(imageId);
+            final ImageView imageView2 = createFlag(imageId);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mPlayer2ImageId = imageId;
+                    onSelectedImage2(imageView2, imageId);
                 }
             });
-            mFlagsContainer2.addView(imageView);
+            mFlagsContainer2.addView(imageView2);
 
         }
 
@@ -80,10 +81,42 @@ public class NewGameActivity extends AppCompatActivity {
 
     ImageView createFlag(int imageId) {
         ImageView imageView = new ImageView(getApplicationContext());
-        //imageView.setLayoutParams(new ViewGroup.LayoutParams());
-        imageView.setMaxHeight(50);
+        this.setImageDimensions(imageView, false);
         imageView.setImageResource(imageId);
         return imageView;
+    }
+
+    void setImageDimensions(ImageView imageView, boolean isSelected) {
+        int height = isSelected ? 80 : 40;
+        int width = height * 16 / 9;
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(width, height));
+        //imageView.setMaxHeight(50);
+    }
+
+    void onSelectedImage1(ImageView imageView, int imageResId) {
+
+        mPlayer1ImageId = imageResId;
+
+        if (mSelectImage1 != null)
+            this.setImageDimensions(mSelectImage1, false);
+
+        mSelectImage1 = imageView;
+
+        this.setImageDimensions(imageView, true);
+
+    }
+
+    void onSelectedImage2(ImageView imageView, int imageResId) {
+
+        mPlayer2ImageId = imageResId;
+
+        if (mSelectImage2 != null)
+            this.setImageDimensions(mSelectImage2, false);
+
+        mSelectImage2 = imageView;
+
+        this.setImageDimensions(imageView, true);
+
     }
 
     void startGame() {
