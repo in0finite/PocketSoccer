@@ -133,7 +133,7 @@ public class SoccerActivity extends AppCompatActivity {
         }
 
         // check for collision between movables, but only for those who didn't have collision with static object
-
+        checkCollisionBetweenMovables();
 
         // at the end, check if ball entered goal
         checkCollisionBetweenGoalsAndBall(goalRects);
@@ -274,6 +274,7 @@ public class SoccerActivity extends AppCompatActivity {
             Movable movableA = this.movables.get(i);
             if (movableA.hadCollisionWithStaticObject)
                 continue;
+
             for (int j=i+1; j < this.movables.size(); j++) {
                 Movable movableB = this.movables.get(j);
                 if (movableB.hadCollisionWithStaticObject)
@@ -284,18 +285,22 @@ public class SoccerActivity extends AppCompatActivity {
                     // 2 circles intersect
                     // resolve collision
 
-                    movableA.velocity.add(movableB.velocity);
-                    movableB.velocity.add(movableA.velocity);
-
                     Vec2 diff = Vec2.substract(movableA.pos, movableB.pos);
                     Vec2 diffNormalized = diff.normalized();
                     float delta = movableA.getRadius() + movableB.getRadius() - distance + 0.01f;
+
+                    float relativeVelocity = Vec2.substract(movableA.velocity, movableB.velocity).length();
+
+                    movableA.velocity.add( Vec2.multiply(diffNormalized, relativeVelocity));
+                    movableB.velocity.add( Vec2.multiply(diffNormalized, - relativeVelocity));
 
                     movableA.pos.add( Vec2.multiply(diffNormalized, delta / 2f) );
                     movableB.pos.add( Vec2.multiply(diffNormalized, - delta / 2f) );
 
                     movableA.hadCollisionWithStaticObject = true;
                     movableB.hadCollisionWithStaticObject = true;
+
+                    break;
                 }
 
             }
