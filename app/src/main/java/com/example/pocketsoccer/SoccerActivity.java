@@ -284,32 +284,46 @@ public class SoccerActivity extends AppCompatActivity {
                 if (movableB.hadCollisionWithStaticObject)
                     continue;
 
-                float distance = Vec2.distance(movableA.pos, movableB.pos);
-                if (distance < movableA.getRadius() + movableB.getRadius()) {
-                    // 2 circles intersect
-                    // resolve collision
+                if (checkCollisionBetweenCircles(movableA, movableB)) {
 
-                    Vec2 diff = Vec2.substract(movableA.pos, movableB.pos);
-                    Vec2 diffNormalized = diff.normalized();
-                    float delta = movableA.getRadius() + movableB.getRadius() - distance + 0.01f;
-
-                    float relativeVelocity = Vec2.substract(movableA.velocity, movableB.velocity).length();
-
-                    movableA.velocity.add( Vec2.multiply(diffNormalized, relativeVelocity / 2f));
-                    movableB.velocity.add( Vec2.multiply(diffNormalized, - relativeVelocity / 2f));
-
-                    movableA.pos.add( Vec2.multiply(diffNormalized, delta / 2f) );
-                    movableB.pos.add( Vec2.multiply(diffNormalized, - delta / 2f) );
-
-                    movableA.hadCollisionWithStaticObject = true;
-                    movableB.hadCollisionWithStaticObject = true;
-
-                    break;
+                    break;  // only 1 collision per frame for a single movable, so break
                 }
 
             }
         }
 
+    }
+
+    boolean checkCollisionBetweenCircles(Movable movableA, Movable movableB) {
+
+        if (movableA.mass == 0 && movableB.mass == 0)
+            return false;
+
+        float distance = Vec2.distance(movableA.pos, movableB.pos);
+
+        if (distance < movableA.getRadius() + movableB.getRadius()) {
+            // 2 circles intersect
+            // resolve collision
+
+            Vec2 diff = Vec2.substract(movableA.pos, movableB.pos);
+            Vec2 diffNormalized = diff.normalized();
+            float delta = movableA.getRadius() + movableB.getRadius() - distance + 0.01f;
+
+            float relativeVelocity = Vec2.substract(movableA.velocity, movableB.velocity).length();
+
+            movableA.velocity.add( Vec2.multiply(diffNormalized, relativeVelocity / 2f));
+            movableB.velocity.add( Vec2.multiply(diffNormalized, - relativeVelocity / 2f));
+
+            movableA.pos.add( Vec2.multiply(diffNormalized, delta / 2f) );
+            movableB.pos.add( Vec2.multiply(diffNormalized, - delta / 2f) );
+
+            movableA.hadCollisionWithStaticObject = true;
+            movableB.hadCollisionWithStaticObject = true;
+
+            return true;
+        }
+
+        return false;
     }
 
     RectF getLeftGoalRect() {
