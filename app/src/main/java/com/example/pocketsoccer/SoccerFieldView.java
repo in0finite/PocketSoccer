@@ -230,7 +230,7 @@ public class SoccerFieldView extends View {
             case (MotionEvent.ACTION_DOWN) :
 
                 // select closest owned disk
-                Movable closestPlayerDisk = SoccerActivity.instance.getClosestPlayerDisk(SoccerActivity.instance.getHumanPlayer());
+                Movable closestPlayerDisk = SoccerActivity.instance.getClosestPlayerDisk(new Vec2(event.getX(), event.getY()), SoccerActivity.instance.getHumanPlayer());
                 SoccerActivity.instance.selectedMovable = closestPlayerDisk;
 
                 return true;
