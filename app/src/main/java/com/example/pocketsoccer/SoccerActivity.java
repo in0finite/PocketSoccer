@@ -77,6 +77,9 @@ public class SoccerActivity extends AppCompatActivity {
         ballVelocity.multiply(800f);
         this.ballMovable.velocity = ballVelocity;
 
+        // set mass
+        this.ballMovable.mass = 80f;
+
 
         this.movables.add(this.ballMovable);
 
@@ -96,6 +99,7 @@ public class SoccerActivity extends AppCompatActivity {
 
             Movable movable = new Movable(new Vec2(x, y), playerSize, Vec2.randomWithMaxLength(600));
             movable.drawable = getResources().getDrawable(flagId1);
+            movable.mass = 80f;
             this.movables.add(movable);
 
             // right side
@@ -103,6 +107,7 @@ public class SoccerActivity extends AppCompatActivity {
 
             movable = new Movable(new Vec2(x, y), playerSize, Vec2.randomWithMaxLength(600));
             movable.drawable = getResources().getDrawable(flagId2);
+            movable.mass = 80f;
             this.movables.add(movable);
 
         }
