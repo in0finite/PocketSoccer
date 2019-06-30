@@ -88,7 +88,7 @@ public class SoccerActivity extends AppCompatActivity {
 
         Vec2 playerSize = new Vec2(80, 80);
 
-        for (int i=0; i < 1; i++) {
+        for (int i=0; i < 2; i++) {
 
             // left side
             float x = getFieldWidth() / 3f;
