@@ -184,6 +184,16 @@ public class SoccerActivity extends AppCompatActivity {
 
             RectF[] goalPostRects = new RectF[]{getUpperGoalPost(goalRect), getLowerGoalPost(goalRect)};
 
+            // goal corners
+            // create 2 corners for every post - to make it easier
+
+            for (RectF goalPostRect : goalPostRects) {
+                Movable[] cornersForGoalPost = getCornersForGoalPost(goalPostRect);
+                for (Movable cornerMovable : cornersForGoalPost) {
+                    checkCollisionBetweenCircles(movable, cornerMovable);
+                }
+            }
+
             // goal posts
 
             for (RectF goalPostRect : goalPostRects) {
@@ -201,16 +211,6 @@ public class SoccerActivity extends AppCompatActivity {
                             movable.pos.toString(), movableRectClone.toString(), movableRect.toString());
 
                     break goals_for;
-                }
-            }
-
-            // goal corners
-            // create 2 corners for every post - to make it easier
-
-            for (RectF goalPostRect : goalPostRects) {
-                Movable[] cornersForGoalPost = getCornersForGoalPost(goalPostRect);
-                for (Movable cornerMovable : cornersForGoalPost) {
-                    checkCollisionBetweenCircles(movable, cornerMovable);
                 }
             }
 
