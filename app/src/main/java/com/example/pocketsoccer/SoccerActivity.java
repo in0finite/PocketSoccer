@@ -19,7 +19,7 @@ public class SoccerActivity extends AppCompatActivity {
     public static int ballImageId;
     public static int fieldImageId;
 
-    public Movable ballMovable = new Movable(new Vec2(150, 150), new Vec2(40, 40), Vec2.zero());
+    public Movable ballMovable = new Ball(new Vec2(150, 150), new Vec2(40, 40), Vec2.zero());
     //public Vec2 ballPos = new Vec2(0, 0);
     //public Vec2 ballSize = new Vec2(40, 40);
     //public Vec2 ballVelocity = new Vec2(0, 0);
@@ -125,6 +125,7 @@ public class SoccerActivity extends AppCompatActivity {
             Movable movable = new Movable(new Vec2(x, y), playerSize, Vec2.randomWithMaxLength(600));
             movable.drawable = getResources().getDrawable(flagId1);
             movable.mass = 80f;
+            movable.player = 0;
             this.movables.add(movable);
 
             // right side
@@ -133,6 +134,7 @@ public class SoccerActivity extends AppCompatActivity {
             movable = new Movable(new Vec2(x, y), playerSize, Vec2.randomWithMaxLength(600));
             movable.drawable = getResources().getDrawable(flagId2);
             movable.mass = 80f;
+            movable.player = 1;
             this.movables.add(movable);
 
         }
@@ -503,15 +505,33 @@ public class SoccerActivity extends AppCompatActivity {
     }
 
     boolean isPlayerAI(int player) {
-
+        return false;
     }
 
     int getHumanPlayer() {
-
+        return this.currentPlayerTurn;
     }
 
-    Movable getClosestPlayerDisk(int player) {
+    Movable getClosestPlayerDisk(Vec2 pos, int player) {
 
+        Movable closestMovable = null;
+        float smallestDistance = Float.MAX_VALUE;
+
+        for (Movable movable : this.movables) {
+
+            if (movable instanceof Ball)    // skip ball
+                continue;
+            if (movable.player != player)
+                continue;
+
+            float distance = Vec2.distance(movable.pos, pos);
+            if (distance <= smallestDistance) {
+                smallestDistance = distance;
+                closestMovable = movable;
+            }
+        }
+
+        return closestMovable;
     }
 
 

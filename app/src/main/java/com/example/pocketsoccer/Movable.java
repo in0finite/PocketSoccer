@@ -9,6 +9,7 @@ public class Movable {
     public float mass = 0f;
     //public int drawableId = 0;
     public Drawable drawable = null;
+    public int player = -1;
     public boolean hadCollisionWithStaticObject = false;
 
     public Movable(Vec2 pos, Vec2 size, Vec2 velocity) {
