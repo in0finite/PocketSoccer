@@ -208,6 +208,8 @@ public class SoccerFieldView extends View {
                     SoccerActivity.instance.selectedMovable.getRadius() + 30f, selectedDiskPaint);
         }
 
+        // draw elapsed time ?
+
         // draw score
 
         float scorePosY = 5 + 50;
@@ -222,6 +224,18 @@ public class SoccerFieldView extends View {
         float rectAroundScoreSize = 100;
         canvas.drawRect(new RectF(scorePosXOfCurrentPlayer - rectAroundScoreSize * 0.5f, scorePosY - rectAroundScoreSize * 0.5f,
                 scorePosXOfCurrentPlayer + rectAroundScoreSize * 0.5f, scorePosY + rectAroundScoreSize * 0.5f), scoreRectPaint);
+
+        // draw player names
+
+        if (SoccerActivity.instance.namePlayer1 != null) {
+            String text = SoccerActivity.instance.namePlayer1 + (SoccerActivity.instance.isPlayer1AI ? " (AI)" : "");
+            canvas.drawText(text, 10, 55, mTextPaint);
+        }
+        if (SoccerActivity.instance.namePlayer2 != null) {
+            String text = SoccerActivity.instance.namePlayer2 + (SoccerActivity.instance.isPlayer2AI ? " (AI)" : "");
+            float textWidth = mTextPaint.measureText(text);
+            canvas.drawText(text, getWidth() - 10 - textWidth, 55, mTextPaint);
+        }
 
 
     }
