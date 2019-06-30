@@ -222,7 +222,8 @@ public class SoccerActivity extends AppCompatActivity {
 
     boolean checkCollisionBetweenCircleAndGoalPost(RectF circleRect, RectF goalPostRect, Vec2 velocity) {
 
-        if (circleRect.intersects(goalPostRect.left, goalPostRect.top, goalPostRect.right, goalPostRect.bottom)) {
+        //if (circleRect.intersects(goalPostRect.left, goalPostRect.top, goalPostRect.right, goalPostRect.bottom)) {
+        if (circleIntersectsRect(new Vec2(circleRect.centerX(), circleRect.centerY()), circleRect.width() * 0.5f, goalPostRect)) {
 
             boolean isFromUpperSide = false;
 
@@ -408,6 +409,21 @@ public class SoccerActivity extends AppCompatActivity {
 
     static boolean isPointInsideRect(Vec2 point, RectF rect) {
         return rect.contains(point.x, point.y);
+    }
+
+    static boolean circleIntersectsRect(Vec2 center, float radius, RectF rect) {
+        // test all 4 points
+        Vec2[] points = new Vec2[]{new Vec2(rect.left, rect.top), new Vec2(rect.right, rect.top), new Vec2(rect.left, rect.bottom),
+                new Vec2(rect.right, rect.bottom)};
+        for (Vec2 point : points) {
+            if (isPointInCircle(center, radius, point))
+                return true;
+        }
+        return false;
+    }
+
+    static boolean isPointInCircle(Vec2 center, float radius, Vec2 point) {
+        return Vec2.distance(center, point) < radius;
     }
 
     static RectF rectFromPosAndSize(Vec2 pos, Vec2 size) {
