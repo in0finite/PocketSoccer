@@ -187,6 +187,16 @@ public class SoccerActivity extends AppCompatActivity {
             }
         }
 
+        // check if AI should make a move
+        if (mGameStartedSinceStartup && this.isPlayerAI(this.currentTurnPlayer)) {
+            // AI is on the move
+            float moveTimeForAI = Math.min(kTurnTime * 0.75f, 2.5f);    // simulate latency
+            if (getTimeSinceStartup() - mTimeWhenTurnStarted >= moveTimeForAI) {
+                // AI should make a move
+                this.performAIMove();
+            }
+        }
+
         // check if new turn should start
         if (mGameStartedSinceStartup && getTimeSinceStartup() - mTimeWhenTurnStarted >= kTurnTime) {
             // time for this turn expired
@@ -582,6 +592,12 @@ public class SoccerActivity extends AppCompatActivity {
         }
 
         return closestMovable;
+    }
+
+    void performAIMove() {
+
+
+
     }
 
 
