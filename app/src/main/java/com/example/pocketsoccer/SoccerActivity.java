@@ -23,6 +23,7 @@ public class SoccerActivity extends AppCompatActivity {
     public static SoccerActivity instance = null;
 
     long mStartingTime = 0;
+    float mElapsedTimeFromLastTime = 0;
 
     public static int ballImageId;
     public static int fieldImageId;
@@ -707,7 +708,7 @@ public class SoccerActivity extends AppCompatActivity {
 
 
     float getTimeSinceStartup() {
-        return (SystemClock.elapsedRealtime() - mStartingTime) / 1000f;
+        return (SystemClock.elapsedRealtime() - mStartingTime) / 1000f + mElapsedTimeFromLastTime;
     }
 
 
@@ -775,7 +776,8 @@ public class SoccerActivity extends AppCompatActivity {
     void loadGameState(DataInputStream in) throws IOException {
 
         // time
-        float timeAtSaving = in.readFloat();
+        float elapsedGameTime = in.readFloat();
+        mElapsedTimeFromLastTime = elapsedGameTime;
         long startingTimeAtSaving = in.readLong();
 
         // flag, name, is AI
@@ -823,7 +825,13 @@ public class SoccerActivity extends AppCompatActivity {
         this.flagDrawable2 = getResources().getDrawable(this.flagIdPlayer2);
 
         // adjust times
+        float myCurrentTime = this.getTimeSinceStartup();
 
+        float timeDiff = elapsedGameTime - this.timeWhenStartedCelebratingGoal;
+        this.timeWhenStartedCelebratingGoal = myCurrentTime - timeDiff;
+
+        timeDiff = elapsedGameTime - mTimeWhenTurnStarted;
+        mTimeWhenTurnStarted = myCurrentTime - timeDiff;
 
 
 
