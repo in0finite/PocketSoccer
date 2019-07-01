@@ -1,6 +1,8 @@
 package com.example.pocketsoccer;
 
 
+import android.graphics.RectF;
+
 public class Vec2 {
     public float x, y;
 
@@ -72,6 +74,10 @@ public class Vec2 {
 
     public static Vec2 multiply(Vec2 vec2, float f) {
         return new Vec2(vec2.x * f, vec2.y * f);
+    }
+
+    public static Vec2 fromRectCenter(RectF rect) {
+        return new Vec2(rect.centerX(), rect.centerY());
     }
 
     public float length() {

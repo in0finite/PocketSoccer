@@ -559,6 +559,10 @@ public class SoccerActivity extends AppCompatActivity {
         mTimeWhenTurnStarted = getTimeSinceStartup();
     }
 
+    int getNonTurnPlayer() {
+        return (this.currentTurnPlayer + 1) % 2;
+    }
+
     boolean isPlayerAI(int player) {
         if (0 == player)
             return this.isPlayer1AI;
@@ -594,10 +598,78 @@ public class SoccerActivity extends AppCompatActivity {
         return closestMovable;
     }
 
-    void performAIMove() {
+    ArrayList<Movable> getPlayerDisks(int playerId) {
+        ArrayList<Movable> list = new ArrayList<>();
+        for (Movable movable : this.movables) {
+            if (movable instanceof Ball)    // skip ball
+                continue;
+            if (movable.player != playerId)
+                continue;
+            list.add(movable);
+        }
+        return list;
+    }
+
+    void performAIMove(RectF[] goalRects) {
+
+        RectF opponentGoalRect = goalRects[this.getNonTurnPlayer()];
+        Vec2 opponentGoalCenter = Vec2.fromRectCenter(opponentGoalRect);
+        ArrayList<Movable> disks = this.getPlayerDisks(this.currentTurnPlayer);
+        float diskRadius = disks.get(0).getRadius();
+
+        Vec2 dirFromBallToGoal = Vec2.substract(opponentGoalCenter, this.ballMovable.pos).normalized();
+
+        Vec2 hitPos = this.ballMovable.pos - dirFromBallToGoal * (this.ballMovable.getRadius() + diskRadius);
+
+        // find disk with best direction
+
+        float smallestAngle = Float.MAX_VALUE;
+        Movable bestMovable = null;
+
+        for (Movable movable : disks) {
+            Vec2 moveDir = Vec2.substract(hitPos, movable.pos).normalized();
+            float angle = Vec2.angle(dirFromBallToGoal, moveDir);
+            if (angle <= smallestAngle) {
+                smallestAngle = angle;
+                bestMovable = movable;
+            }
+        }
 
 
+        if (bestMovable != null && smallestAngle < 120) {
+            this.performAIMove(bestMovable, hitPos);
+        }
+        else {
+            // try to hit opponent's disk
+            if (bestMovable != null) {
+                Movable opponentDisk = this.getClosestPlayerDisk(bestMovable.pos, this.getNonTurnPlayer());
+                if (opponentDisk != null) {
+                    this.performAIMove(bestMovable, opponentDisk.pos);
+                }
+            }
+        }
 
+    }
+
+    void performAIMove(Movable sourceMovable, Vec2 targetPos) {
+
+        float maxStrength = 1000f;
+        float minStrength = 400f;
+        float distance = Vec2.distance(sourceMovable.pos, targetPos);
+        float diagonalLength = new Vec2(this.getFieldWidth(), this.getFieldHeight()).length();
+
+        float strength = distance / (diagonalLength * 0.5f) * maxStrength;
+
+        if (strength > maxStrength)
+            strength = maxStrength;
+        if (strength < minStrength)
+            strength = minStrength;
+
+        sourceMovable.velocity = Vec2.multiply(Vec2.substract(targetPos, sourceMovable.pos).normalized(), strength);
+
+        System.out.printf("AI performed move - strength %f\n", strength);
+
+        this.nextTurn();
     }
 
 
