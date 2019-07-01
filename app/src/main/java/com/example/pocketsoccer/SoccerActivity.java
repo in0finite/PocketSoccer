@@ -628,6 +628,21 @@ public class SoccerActivity extends AppCompatActivity {
 
         Vec2 dirFromBallToGoal = Vec2.substract(opponentGoalCenter, this.ballMovable.pos).normalized();
 
+        if (0 == this.numTurnsPassed) {
+            // this is the first move in the game
+            // do some random stuff
+
+            // choose random disk
+            Movable movable = disks.get(Util.randomInt(0, disks.size() - 1));
+
+            // shoot him towards random position on the ball
+            Vec2 pos = Vec2.add( this.ballMovable.pos, Vec2.randomWithMaxLength(this.ballMovable.getRadius()) );
+
+            this.performAIMove(movable, pos, opponentGoalCenter);
+
+            return;
+        }
+
         Vec2 hitPos = Vec2.substract( this.ballMovable.pos, Vec2.multiply( dirFromBallToGoal, (this.ballMovable.getRadius() + diskRadius) ) );
 
         // find disk with best direction
@@ -658,12 +673,6 @@ public class SoccerActivity extends AppCompatActivity {
                 }
             }
         }
-
-    }
-
-    void performAIMoveAsFirstMove() {
-
-
 
     }
 
