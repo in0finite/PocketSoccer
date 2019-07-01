@@ -294,11 +294,15 @@ public class SoccerFieldView extends View {
 
                 this.touchStartPos = touchPos;
 
-                // select closest owned disk
-                Movable closestPlayerDisk = SoccerActivity.instance.getClosestPlayerDisk(touchPos, SoccerActivity.instance.getHumanPlayer());
+                if (SoccerActivity.instance.isPlayerHuman(SoccerActivity.instance.currentPlayerTurn)) {
 
-                if (Vec2.distance(closestPlayerDisk.pos, touchPos) < closestPlayerDisk.getRadius() + 100) {
-                    SoccerActivity.instance.selectedMovable = closestPlayerDisk;
+                    // select closest owned disk
+                    Movable closestPlayerDisk = SoccerActivity.instance.getClosestPlayerDisk(touchPos, SoccerActivity.instance.currentPlayerTurn);
+
+                    if (Vec2.distance(closestPlayerDisk.pos, touchPos) < closestPlayerDisk.getRadius() + 100) {
+                        SoccerActivity.instance.selectedMovable = closestPlayerDisk;
+                    }
+
                 }
 
                 return true;

@@ -553,6 +553,10 @@ public class SoccerActivity extends AppCompatActivity {
         return false;
     }
 
+    boolean isPlayerHuman(int player) {
+        return ! isPlayerAI(player);
+    }
+
     int getHumanPlayer() {
         return this.currentPlayerTurn;
     }
