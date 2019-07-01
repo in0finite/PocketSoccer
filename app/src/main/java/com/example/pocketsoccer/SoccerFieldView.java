@@ -33,7 +33,7 @@ public class SoccerFieldView extends View {
     Drawable ballDrawable;
     Drawable fieldDrawable;
 
-    Paint ballPaint, fieldPaint, goalPostPaint, goalCornerPaint, scoreRectPaint, selectedDiskPaint;
+    Paint ballPaint, fieldPaint, goalPostPaint, goalCornerPaint, scoreRectPaint, selectedDiskPaint, celebrationPaint;
 
     Vec2 touchStartPos = new Vec2();
 
@@ -108,6 +108,10 @@ public class SoccerFieldView extends View {
         selectedDiskPaint.setStyle(Paint.Style.STROKE);
         selectedDiskPaint.setStrokeWidth(5f);
         selectedDiskPaint.setColor(Color.CYAN);
+
+        celebrationPaint = new Paint();
+        celebrationPaint.setStyle(Paint.Style.FILL);
+        celebrationPaint.setColor(Color.argb(128, 128, 128, 128));
 
 
         ballDrawable = getResources().getDrawable(SoccerActivity.ballImageId);
@@ -238,6 +242,30 @@ public class SoccerFieldView extends View {
             String text = SoccerActivity.instance.namePlayer2 + (SoccerActivity.instance.isPlayer2AI ? " (AI)" : "");
             float textWidth = mTextPaint.measureText(text);
             canvas.drawText(text, getWidth() - 10 - textWidth / 2f, 55, mTextPaint);
+        }
+
+        // draw celebration stuff
+
+        if (SoccerActivity.instance.isCelebratingGoal) {
+            float width = getWidth() * 0.8f;
+            float height = width * 9f / 16f;
+            canvas.drawRoundRect(new RectF(getWidth() / 2f - width / 2f, getHeight() / 2f - height / 2f, getWidth() / 2f + width / 2f,
+                    getHeight() / 2f + height / 2f), 6f, 6f, celebrationPaint);
+
+            // draw flags
+            float leftSideX = getWidth() / 2f - width / 4f;
+            float rightSideX = getWidth() / 2f + width / 4f;
+            float flagsPosY = getHeight() / 2f - height / 3f;
+            float flagWidth = width / 4f;
+            float flagHeight = flagWidth * 9f / 16f;
+            drawDrawable(SoccerActivity.instance.flagDrawable1, new Vec2(leftSideX, flagsPosY), new Vec2(flagWidth, flagHeight), canvas);
+            drawDrawable(SoccerActivity.instance.flagDrawable2, new Vec2(rightSideX, flagsPosY), new Vec2(flagWidth, flagHeight), canvas);
+
+            // draw score
+            float y = getHeight() / 2f + height / 3f;
+            canvas.drawText(String.valueOf(SoccerActivity.instance.scorePlayer1), leftSideX, y, mTextPaint);
+            canvas.drawText(String.valueOf(SoccerActivity.instance.scorePlayer2), rightSideX, y, mTextPaint);
+
         }
 
 

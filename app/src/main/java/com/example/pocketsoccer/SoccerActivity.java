@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -54,6 +55,8 @@ public class SoccerActivity extends AppCompatActivity {
 
     public Movable selectedMovable = null;
 
+    public Drawable flagDrawable1,flagDrawable2;
+
     MyTask mTask;
     View mCustomView;
 
@@ -74,6 +77,9 @@ public class SoccerActivity extends AppCompatActivity {
         this.namePlayer2 = intent.getStringExtra("name2");
         this.isPlayer1AI = intent.getBooleanExtra("isAI1", false);
         this.isPlayer2AI = intent.getBooleanExtra("isAI2", false);
+
+        this.flagDrawable1 = getResources().getDrawable(this.flagIdPlayer1);
+        this.flagDrawable2 = getResources().getDrawable(this.flagIdPlayer2);
 
 
         super.onCreate(savedInstanceState);
