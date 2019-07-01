@@ -654,7 +654,7 @@ public class SoccerActivity extends AppCompatActivity {
 
     void performAIMove(Movable sourceMovable, Vec2 targetPos, Vec2 pushTargetPos) {
 
-        float maxStrength = 1000f;
+        float maxStrength = 1200f;
         float minStrength = 400f;
         float distanceToPushTarget = Vec2.distance(sourceMovable.pos, pushTargetPos);
         float diagonalLength = new Vec2(this.getFieldWidth(), this.getFieldHeight()).length();
