@@ -50,7 +50,7 @@ public class SoccerActivity extends AppCompatActivity {
 
     public int currentPlayerTurn = 0;
     float mTimeWhenTurnStarted = 0;
-    public static final float turnTime = 3f;
+    public static final float kTurnTime = 3f;
 
     public Movable selectedMovable = null;
 
@@ -182,7 +182,7 @@ public class SoccerActivity extends AppCompatActivity {
         }
 
         // check if new turn should start
-        if (mGameStartedSinceStartup && getTimeSinceStartup() - mTimeWhenTurnStarted >= turnTime) {
+        if (mGameStartedSinceStartup && getTimeSinceStartup() - mTimeWhenTurnStarted >= kTurnTime) {
             // time for this turn expired
             nextTurn();
         }
