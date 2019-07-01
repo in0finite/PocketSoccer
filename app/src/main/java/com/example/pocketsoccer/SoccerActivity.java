@@ -48,6 +48,7 @@ public class SoccerActivity extends AppCompatActivity {
     public boolean isCelebratingGoal = false;
     public float timeWhenStartedCelebratingGoal = 0f;
     public static final float kTimeToCelebrateGoal = 3f;
+    int mNextPlayerWhenCelebrationFinishes;
 
     public int currentTurnPlayer = 0;
     float mTimeWhenTurnStarted = 0;
@@ -112,11 +113,11 @@ public class SoccerActivity extends AppCompatActivity {
 
     }
 
-    void startGame() {
+    void startGame(int nextPlayer) {
 
         this.isCelebratingGoal = false;
         mWasBallInsideGoalLastTime = false;
-        this.currentTurnPlayer = 0;
+        this.currentTurnPlayer = nextPlayer;
         mTimeWhenTurnStarted = getTimeSinceStartup();
         this.selectedMovable = null;
 
@@ -186,7 +187,7 @@ public class SoccerActivity extends AppCompatActivity {
         if (!mGameStartedSinceStartup) {
             if (getTimeSinceStartup() > 2f) {
                 mGameStartedSinceStartup = true;
-                startGame();
+                startGame(0);
             }
         }
 
@@ -209,7 +210,7 @@ public class SoccerActivity extends AppCompatActivity {
         // check if we should stop celebrating
         if (this.isCelebratingGoal && getTimeSinceStartup() - this.timeWhenStartedCelebratingGoal >= kTimeToCelebrateGoal) {
             this.isCelebratingGoal = false;
-            startGame();
+            startGame(mNextPlayerWhenCelebrationFinishes);
         }
 
         // update graphics
@@ -390,6 +391,7 @@ public class SoccerActivity extends AppCompatActivity {
             if (!this.isDeathMatchModeOn) {
                 this.isCelebratingGoal = true;
                 this.timeWhenStartedCelebratingGoal = getTimeSinceStartup();
+                mNextPlayerWhenCelebrationFinishes = isLeftGoal ? 0 : 1 ;
             }
         }
 
