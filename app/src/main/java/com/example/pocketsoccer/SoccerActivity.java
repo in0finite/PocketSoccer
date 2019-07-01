@@ -638,28 +638,28 @@ public class SoccerActivity extends AppCompatActivity {
         System.out.printf("AI - smallest angle: %f\n", smallestAngle);
 
         if (bestMovable != null && smallestAngle < 120) {
-            this.performAIMove(bestMovable, hitPos);
+            this.performAIMove(bestMovable, hitPos, opponentGoalCenter);
         }
         else {
             // try to hit opponent's disk
             if (bestMovable != null) {
                 Movable opponentDisk = this.getClosestPlayerDisk(bestMovable.pos, this.getNonTurnPlayer());
                 if (opponentDisk != null) {
-                    this.performAIMove(bestMovable, opponentDisk.pos);
+                    this.performAIMove(bestMovable, opponentDisk.pos, opponentDisk.pos);
                 }
             }
         }
 
     }
 
-    void performAIMove(Movable sourceMovable, Vec2 targetPos) {
+    void performAIMove(Movable sourceMovable, Vec2 targetPos, Vec2 pushTargetPos) {
 
         float maxStrength = 1000f;
         float minStrength = 400f;
-        float distance = Vec2.distance(sourceMovable.pos, targetPos);
+        float distanceToPushTarget = Vec2.distance(sourceMovable.pos, pushTargetPos);
         float diagonalLength = new Vec2(this.getFieldWidth(), this.getFieldHeight()).length();
 
-        float strength = distance / (diagonalLength * 0.5f) * maxStrength;
+        float strength = distanceToPushTarget / (diagonalLength * 0.5f) * maxStrength;
 
         if (strength > maxStrength)
             strength = maxStrength;
