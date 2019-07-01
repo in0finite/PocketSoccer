@@ -54,6 +54,7 @@ public class SoccerActivity extends AppCompatActivity {
     public int currentTurnPlayer = 0;
     float mTimeWhenTurnStarted = 0;
     public static final float kTurnTime = 3f;
+    public int numTurnsPassed = 0;
 
     public Movable selectedMovable = null;
 
@@ -120,6 +121,7 @@ public class SoccerActivity extends AppCompatActivity {
         mWasBallInsideGoalLastTime = false;
         this.currentTurnPlayer = nextPlayer;
         mTimeWhenTurnStarted = getTimeSinceStartup();
+        this.numTurnsPassed = 0;
         this.selectedMovable = null;
 
         this.movables.clear();
@@ -563,6 +565,7 @@ public class SoccerActivity extends AppCompatActivity {
     void nextTurn() {
         this.currentTurnPlayer = (this.currentTurnPlayer + 1) % 2;
         mTimeWhenTurnStarted = getTimeSinceStartup();
+        this.numTurnsPassed ++;
     }
 
     int getNonTurnPlayer() {
@@ -655,6 +658,12 @@ public class SoccerActivity extends AppCompatActivity {
                 }
             }
         }
+
+    }
+
+    void performAIMoveAsFirstMove() {
+
+
 
     }
 
