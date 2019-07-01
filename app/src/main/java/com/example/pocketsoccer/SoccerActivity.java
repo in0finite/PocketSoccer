@@ -76,6 +76,8 @@ public class SoccerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        System.out.println("onCreate() started");
+
         instance = this;
 
         mStartingTime = SystemClock.elapsedRealtime();
@@ -763,6 +765,7 @@ public class SoccerActivity extends AppCompatActivity {
     }
 
     void loadGameState(Bundle bundle) {
+        System.out.println("loadGameState()");
         try {
             byte[] data = bundle.getByteArray("data");
             if (data != null)
@@ -833,6 +836,7 @@ public class SoccerActivity extends AppCompatActivity {
         mTimeWhenTurnStarted = myCurrentTime - timeDiff;
 
 
+        System.out.println("loadGameState() ok");
 
     }
 
@@ -852,6 +856,8 @@ public class SoccerActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+
+        System.out.println("onSaveInstanceState()");
 
         super.onSaveInstanceState(outState);
 
