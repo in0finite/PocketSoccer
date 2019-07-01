@@ -25,6 +25,10 @@ public class Movable {
         this.mass = mass;
     }
 
+    public Movable() {
+
+    }
+
     public float getRadius() {
         return this.size.x * 0.5f;
     }

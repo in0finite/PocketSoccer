@@ -713,7 +713,9 @@ public class SoccerActivity extends AppCompatActivity {
 
     void saveGameState(DataOutputStream out) throws IOException {
 
-        // starting time
+        // time
+        out.writeFloat(this.getTimeSinceStartup());
+        out.writeLong(mStartingTime);
 
         // flag, name, is AI
         out.writeInt(this.flagIdPlayer1);
@@ -724,12 +726,33 @@ public class SoccerActivity extends AppCompatActivity {
         out.writeBoolean(this.isPlayer2AI);
 
         // ball
-        this.saveMovableState(this.ballMovable, out);
+        //this.saveMovableState(this.ballMovable, out);
 
         // movables
+        out.writeInt(this.movables.size());
         for (Movable movable : this.movables) {
             this.saveMovableState(movable, out);
         }
+
+        out.writeBoolean(mWasBallInsideGoalLastTime);
+
+        // score
+        out.writeInt(this.scorePlayer1);
+        out.writeInt(this.scorePlayer2);
+
+        out.writeBoolean(mGameStartedSinceStartup);
+
+        // celebration
+        out.writeBoolean(this.isCelebratingGoal);
+        out.writeFloat(this.timeWhenStartedCelebratingGoal);
+        out.writeInt(mNextPlayerWhenCelebrationFinishes);
+
+        // turn
+        out.writeInt(this.currentTurnPlayer);
+        out.writeFloat(mTimeWhenTurnStarted);
+        out.writeInt(this.numTurnsPassed);
+
+        // restore drawables
 
 
     }
@@ -749,8 +772,75 @@ public class SoccerActivity extends AppCompatActivity {
         out.writeFloat(v.y);
     }
 
-    void loadGameState(DataInputStream in) {
+    void loadGameState(DataInputStream in) throws IOException {
 
+        // time
+        float timeAtSaving = in.readFloat();
+        long startingTimeAtSaving = in.readLong();
+
+        // flag, name, is AI
+        this.flagIdPlayer1 = in.readInt();
+        this.flagIdPlayer2 = in.readInt();
+        this.namePlayer1 = in.readUTF();
+        this.namePlayer2 = in.readUTF();
+        this.isPlayer1AI = in.readBoolean();
+        this.isPlayer2AI = in.readBoolean();
+
+        // ball
+        //loadMovable(in);
+
+        // movables
+        this.movables.clear();
+        int numMovables = in.readInt();
+        for (int i=0; i < numMovables; i++) {
+            Movable m = loadMovable(in);
+            this.movables.add(m);
+        }
+
+        // assign ball movable
+        this.ballMovable = this.movables.get(0);
+
+        mWasBallInsideGoalLastTime = in.readBoolean();
+
+        // score
+        this.scorePlayer1 = in.readInt();
+        this.scorePlayer2 = in.readInt();
+
+        mGameStartedSinceStartup = in.readBoolean();
+
+        // celebration
+        this.isCelebratingGoal = in.readBoolean();
+        this.timeWhenStartedCelebratingGoal = in.readFloat();
+        mNextPlayerWhenCelebrationFinishes = in.readInt();
+
+        // turn
+        this.currentTurnPlayer = in.readInt();
+        mTimeWhenTurnStarted = in.readFloat();
+        this.numTurnsPassed = in.readInt();
+
+        // restore drawables
+        this.flagDrawable1 = getResources().getDrawable(this.flagIdPlayer1);
+        this.flagDrawable2 = getResources().getDrawable(this.flagIdPlayer2);
+
+        // adjust times
+
+
+
+
+    }
+
+    Movable loadMovable(DataInputStream in) throws IOException {
+        Movable m = new Movable();
+        m.pos = loadVec2(in);
+        m.size = loadVec2(in);
+        m.velocity = loadVec2(in);
+        m.mass = in.readFloat();
+        m.player = in.readInt();
+        return m;
+    }
+
+    Vec2 loadVec2(DataInputStream in) throws IOException {
+        return new Vec2(in.readFloat(), in.readFloat());
     }
 
     @Override
@@ -759,7 +849,11 @@ public class SoccerActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        this.saveGameState(new DataOutputStream(byteArrayOutputStream));
+        try {
+            this.saveGameState(new DataOutputStream(byteArrayOutputStream));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         outState.putByteArray("data", byteArrayOutputStream.toByteArray());
 
     }
