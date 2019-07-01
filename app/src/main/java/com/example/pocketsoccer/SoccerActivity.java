@@ -185,7 +185,7 @@ public class SoccerActivity extends AppCompatActivity {
         }
 
         if (!mGameStartedSinceStartup) {
-            if (getTimeSinceStartup() > 2f) {
+            if (getTimeSinceStartup() > 1f) {
                 mGameStartedSinceStartup = true;
                 startGame(0);
             }
