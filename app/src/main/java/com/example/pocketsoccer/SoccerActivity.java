@@ -49,7 +49,7 @@ public class SoccerActivity extends AppCompatActivity {
     public float timeWhenStartedCelebratingGoal = 0f;
     public static final float kTimeToCelebrateGoal = 3f;
 
-    public int currentPlayerTurn = 0;
+    public int currentTurnPlayer = 0;
     float mTimeWhenTurnStarted = 0;
     public static final float kTurnTime = 3f;
 
@@ -116,7 +116,7 @@ public class SoccerActivity extends AppCompatActivity {
 
         this.isCelebratingGoal = false;
         mWasBallInsideGoalLastTime = false;
-        this.currentPlayerTurn = 0;
+        this.currentTurnPlayer = 0;
         mTimeWhenTurnStarted = getTimeSinceStartup();
         this.selectedMovable = null;
 
@@ -545,7 +545,7 @@ public class SoccerActivity extends AppCompatActivity {
 
 
     void nextTurn() {
-        this.currentPlayerTurn = (this.currentPlayerTurn + 1) % 2;
+        this.currentTurnPlayer = (this.currentTurnPlayer + 1) % 2;
         mTimeWhenTurnStarted = getTimeSinceStartup();
     }
 
@@ -558,7 +558,7 @@ public class SoccerActivity extends AppCompatActivity {
     }
 
     int getHumanPlayer() {
-        return this.currentPlayerTurn;
+        return this.currentTurnPlayer;
     }
 
     Movable getClosestPlayerDisk(Vec2 pos, int player) {

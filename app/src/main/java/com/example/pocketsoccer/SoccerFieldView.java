@@ -1,21 +1,15 @@
 package com.example.pocketsoccer;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
-import androidx.core.view.MotionEventCompat;
 
 /**
  * TODO: document your custom view class.
@@ -226,7 +220,7 @@ public class SoccerFieldView extends View {
 
         // draw rectangle around score of current player
 
-        float scorePosXOfCurrentPlayer = SoccerActivity.instance.currentPlayerTurn == 0 ? scorePosX1 : scorePosX2;
+        float scorePosXOfCurrentPlayer = SoccerActivity.instance.currentTurnPlayer == 0 ? scorePosX1 : scorePosX2;
         float rectAroundScoreSize = 100;
         canvas.drawRect(new RectF(scorePosXOfCurrentPlayer - rectAroundScoreSize * 0.5f, scorePosY - rectAroundScoreSize * 0.5f,
                 scorePosXOfCurrentPlayer + rectAroundScoreSize * 0.5f, scorePosY + rectAroundScoreSize * 0.5f), scoreRectPaint);
@@ -294,10 +288,10 @@ public class SoccerFieldView extends View {
 
                 this.touchStartPos = touchPos;
 
-                if (SoccerActivity.instance.isPlayerHuman(SoccerActivity.instance.currentPlayerTurn)) {
+                if (SoccerActivity.instance.isPlayerHuman(SoccerActivity.instance.currentTurnPlayer)) {
 
                     // select closest owned disk
-                    Movable closestPlayerDisk = SoccerActivity.instance.getClosestPlayerDisk(touchPos, SoccerActivity.instance.currentPlayerTurn);
+                    Movable closestPlayerDisk = SoccerActivity.instance.getClosestPlayerDisk(touchPos, SoccerActivity.instance.currentTurnPlayer);
 
                     if (Vec2.distance(closestPlayerDisk.pos, touchPos) < closestPlayerDisk.getRadius() + 100) {
                         SoccerActivity.instance.selectedMovable = closestPlayerDisk;
@@ -311,7 +305,7 @@ public class SoccerFieldView extends View {
                 return true;
             case (MotionEvent.ACTION_UP) :
 
-                if (SoccerActivity.instance.selectedMovable != null && SoccerActivity.instance.selectedMovable.player == SoccerActivity.instance.currentPlayerTurn) {
+                if (SoccerActivity.instance.selectedMovable != null && SoccerActivity.instance.selectedMovable.player == SoccerActivity.instance.currentTurnPlayer) {
 
                     Vec2 diff = Vec2.substract(touchPos, this.touchStartPos);
                     Vec2 dir = diff.normalized();
