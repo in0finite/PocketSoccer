@@ -96,6 +96,15 @@ public class Vec2 {
         return diff.length();
     }
 
+    public static float angle(Vec2 v1, Vec2 v2) {
+        float cosAngle = Vec2.dot(v1, v2) / (v1.length() * v2.length());
+        return (float) Math.toDegrees(Math.acos(cosAngle));
+    }
+
+    public static float dot(Vec2 v1, Vec2 v2) {
+        return v1.x * v2.x + v1.y * v2.y;
+    }
+
     public static Vec2 randomNormalized() {
         double x = (Math.random() - 0.5);
         double y = (Math.random() - 0.5);
