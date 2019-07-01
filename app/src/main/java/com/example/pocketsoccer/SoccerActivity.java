@@ -862,13 +862,13 @@ public class SoccerActivity extends AppCompatActivity {
 
         super.onSaveInstanceState(outState);
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             this.saveGameState(new DataOutputStream(byteArrayOutputStream));
+            outState.putByteArray("data", byteArrayOutputStream.toByteArray());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        outState.putByteArray("data", byteArrayOutputStream.toByteArray());
 
     }
 
