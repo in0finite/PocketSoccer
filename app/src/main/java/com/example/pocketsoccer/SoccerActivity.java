@@ -635,6 +635,7 @@ public class SoccerActivity extends AppCompatActivity {
             }
         }
 
+        System.out.printf("AI - smallest angle: %f\n", smallestAngle);
 
         if (bestMovable != null && smallestAngle < 120) {
             this.performAIMove(bestMovable, hitPos);
