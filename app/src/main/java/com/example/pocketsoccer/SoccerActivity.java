@@ -25,7 +25,7 @@ public class SoccerActivity extends AppCompatActivity {
     public String namePlayer1 = "", namePlayer2 = "";
     public boolean isPlayer1AI = false, isPlayer2AI = false;
 
-    public boolean isDeathMatchModeOn = true;
+    public boolean isDeathMatchModeOn = false;
 
     public Movable ballMovable = new Ball(new Vec2(150, 150), new Vec2(40, 40), Vec2.zero());
     //public Vec2 ballPos = new Vec2(0, 0);
