@@ -208,7 +208,9 @@ public class SoccerFieldView extends View {
                     SoccerActivity.instance.selectedMovable.getRadius() + 30f, selectedDiskPaint);
         }
 
-        // draw elapsed time ?
+        // draw elapsed time
+        canvas.drawText(formatElapsedTime(SoccerActivity.instance.getTimeSinceStartup()),
+                getWidth() / 2f, getHeight() - 20, mTextPaint);
 
         // draw score
 
@@ -309,6 +311,19 @@ public class SoccerFieldView extends View {
 
     }
 
+
+    String formatElapsedTime(float elapsedTime) {
+        int seconds = (int) (elapsedTime % 60);
+        int minutes = (int) (elapsedTime / 60);
+        String text = "";
+        if (minutes < 10)
+            text += "0";
+        text += minutes + ":";
+        if (seconds < 10)
+            text += "0";
+        text += seconds;
+        return text;
+    }
 
     /**
      * Gets the example string attribute value.
