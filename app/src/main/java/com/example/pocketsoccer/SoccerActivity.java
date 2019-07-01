@@ -550,15 +550,16 @@ public class SoccerActivity extends AppCompatActivity {
     }
 
     boolean isPlayerAI(int player) {
-        return false;
+        if (0 == player)
+            return this.isPlayer1AI;
+        else if (1 == player)
+            return this.isPlayer2AI;
+        else
+            return false;
     }
 
     boolean isPlayerHuman(int player) {
         return ! isPlayerAI(player);
-    }
-
-    int getHumanPlayer() {
-        return this.currentTurnPlayer;
     }
 
     Movable getClosestPlayerDisk(Vec2 pos, int player) {
