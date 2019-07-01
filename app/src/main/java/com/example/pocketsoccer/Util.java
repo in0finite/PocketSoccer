@@ -3,6 +3,7 @@ package com.example.pocketsoccer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Util {
@@ -17,6 +18,13 @@ public class Util {
         fis.read(data);
         fis.close();
         return data;
+    }
+
+    public static void writeToFile(File file, byte[] data) throws IOException {
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(data);
+        fos.flush();
+        fos.close();
     }
 
 }

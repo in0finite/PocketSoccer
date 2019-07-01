@@ -18,11 +18,16 @@ public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "PocketSoccer";
     public static final String savedGameFileName = "SavedGame.bin";
 
+    public static MainActivity instance = null;
+
     Button mContinueGameButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        instance = this;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

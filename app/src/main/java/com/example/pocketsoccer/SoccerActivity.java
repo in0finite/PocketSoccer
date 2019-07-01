@@ -14,6 +14,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -709,6 +712,16 @@ public class SoccerActivity extends AppCompatActivity {
     }
 
 
+    void saveGameState(File file) {
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            this.saveGameState(new DataOutputStream(byteArrayOutputStream));
+            Util.writeToFile(file, byteArrayOutputStream.toByteArray());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     void saveGameState(DataOutputStream out) throws IOException {
 
         // time
@@ -913,6 +926,10 @@ public class SoccerActivity extends AppCompatActivity {
             mTask.cancel(false);
             mTask = null;
         }
+
+        // save the game
+        File file = MainActivity.instance.getSavedGameFile();
+        this.saveGameState(file);
 
         super.onStop();
     }
