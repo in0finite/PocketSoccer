@@ -193,7 +193,7 @@ public class SoccerActivity extends AppCompatActivity {
             float moveTimeForAI = Math.min(kTurnTime * 0.75f, 2.5f);    // simulate latency
             if (getTimeSinceStartup() - mTimeWhenTurnStarted >= moveTimeForAI) {
                 // AI should make a move
-                this.performAIMove();
+                this.performAIMove(goalRects);
             }
         }
 
@@ -619,7 +619,7 @@ public class SoccerActivity extends AppCompatActivity {
 
         Vec2 dirFromBallToGoal = Vec2.substract(opponentGoalCenter, this.ballMovable.pos).normalized();
 
-        Vec2 hitPos = this.ballMovable.pos - dirFromBallToGoal * (this.ballMovable.getRadius() + diskRadius);
+        Vec2 hitPos = Vec2.substract( this.ballMovable.pos, Vec2.multiply( dirFromBallToGoal, (this.ballMovable.getRadius() + diskRadius) ) );
 
         // find disk with best direction
 
