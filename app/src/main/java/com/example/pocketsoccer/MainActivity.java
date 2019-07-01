@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             if (file.exists()) {
                 byte[] data = Util.readFile(file);
 
-                Intent intent = new Intent(this, NewGameActivity.class);
+                Intent intent = new Intent(this, SoccerActivity.class);
                 intent.putExtra("continueGameData", data);
                 startActivity(intent);
             }

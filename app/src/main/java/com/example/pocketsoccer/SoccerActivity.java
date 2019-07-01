@@ -91,8 +91,12 @@ public class SoccerActivity extends AppCompatActivity {
         this.isPlayer1AI = intent.getBooleanExtra("isAI1", false);
         this.isPlayer2AI = intent.getBooleanExtra("isAI2", false);
 
+        byte[] continueGameData = intent.getByteArrayExtra("continueGameData");
+
         if (savedInstanceState != null)
             this.loadGameState(savedInstanceState);
+        else if (continueGameData != null)
+            this.loadGameState(continueGameData);
 
         // load flag drawables
         this.flagDrawable1 = getResources().getDrawable(this.flagIdPlayer1);
@@ -765,11 +769,16 @@ public class SoccerActivity extends AppCompatActivity {
     }
 
     void loadGameState(Bundle bundle) {
-        System.out.println("loadGameState()");
+        System.out.println("loadGameState(Bundle)");
+        byte[] data = bundle.getByteArray("data");
+        if (data != null)
+            this.loadGameState(data);
+    }
+
+    void loadGameState(byte[] data) {
         try {
-            byte[] data = bundle.getByteArray("data");
-            if (data != null)
-                this.loadGameState(new DataInputStream(new ByteArrayInputStream(data)));
+            System.out.println("loadGameState(byte[])");
+            this.loadGameState(new DataInputStream(new ByteArrayInputStream(data)));
         } catch (IOException e) {
             e.printStackTrace();
         }
