@@ -143,7 +143,7 @@ public class SoccerActivity extends AppCompatActivity {
 
     void createPlayers(int flagId1, int flagId2) {
 
-        Vec2 playerSize = new Vec2(80, 80);
+        Vec2 playerSize = new Vec2(100, 100);
 
         for (int i=0; i < 3; i++) {
 
