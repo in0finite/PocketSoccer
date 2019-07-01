@@ -24,6 +24,8 @@ public class SoccerActivity extends AppCompatActivity {
     public String namePlayer1 = "", namePlayer2 = "";
     public boolean isPlayer1AI = false, isPlayer2AI = false;
 
+    public boolean isDeathMatchModeOn = true;
+
     public Movable ballMovable = new Ball(new Vec2(150, 150), new Vec2(40, 40), Vec2.zero());
     //public Vec2 ballPos = new Vec2(0, 0);
     //public Vec2 ballSize = new Vec2(40, 40);
@@ -41,6 +43,10 @@ public class SoccerActivity extends AppCompatActivity {
     int scorePlayer1 = 0, scorePlayer2 = 0;
 
     boolean mGameStartedSinceStartup = false;
+
+    public boolean isCelebratingGoal = false;
+    public float timeWhenStartedCelebratingGoal = 0f;
+    public static final float kTimeToCelebrateGoal = 3f;
 
     public int currentPlayerTurn = 0;
     float mTimeWhenTurnStarted = 0;
@@ -102,6 +108,8 @@ public class SoccerActivity extends AppCompatActivity {
 
     void startGame() {
 
+        this.isCelebratingGoal = false;
+        mWasBallInsideGoalLastTime = false;
         this.currentPlayerTurn = 0;
         mTimeWhenTurnStarted = getTimeSinceStartup();
         this.selectedMovable = null;
@@ -179,6 +187,12 @@ public class SoccerActivity extends AppCompatActivity {
             nextTurn();
         }
 
+        // check if we should stop celebrating
+        if (this.isCelebratingGoal && getTimeSinceStartup() - this.timeWhenStartedCelebratingGoal >= kTimeToCelebrateGoal) {
+            this.isCelebratingGoal = false;
+            startGame();
+        }
+
         // update graphics
         mCustomView.invalidate();
 
@@ -196,7 +210,8 @@ public class SoccerActivity extends AppCompatActivity {
         checkCollisionBetweenMovables();
 
         // at the end, check if ball entered goal
-        checkCollisionBetweenGoalsAndBall(goalRects);
+        if (!this.isCelebratingGoal)
+            checkCollisionBetweenGoalsAndBall(goalRects);
 
     }
 
@@ -342,12 +357,21 @@ public class SoccerActivity extends AppCompatActivity {
         }
 
         if (isInsideAnyGoal && !mWasBallInsideGoalLastTime) {
+
             boolean isLeftGoal = (insideGoalRect == goalRects[0]);
+
             System.out.printf("GOAL ! is left: %b\n", isLeftGoal);
+
             if (isLeftGoal)
                 scorePlayer2 ++;
             else
                 scorePlayer1 ++;
+
+            // start celebration
+            if (!this.isDeathMatchModeOn) {
+                this.isCelebratingGoal = true;
+                this.timeWhenStartedCelebratingGoal = getTimeSinceStartup();
+            }
         }
 
         mWasBallInsideGoalLastTime = isInsideAnyGoal;
