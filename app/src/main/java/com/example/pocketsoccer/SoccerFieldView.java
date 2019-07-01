@@ -229,12 +229,13 @@ public class SoccerFieldView extends View {
 
         if (SoccerActivity.instance.namePlayer1 != null) {
             String text = SoccerActivity.instance.namePlayer1 + (SoccerActivity.instance.isPlayer1AI ? " (AI)" : "");
-            canvas.drawText(text, 10, 55, mTextPaint);
+            float textWidth = mTextPaint.measureText(text);
+            canvas.drawText(text, 10 + textWidth / 2f, 55, mTextPaint);
         }
         if (SoccerActivity.instance.namePlayer2 != null) {
             String text = SoccerActivity.instance.namePlayer2 + (SoccerActivity.instance.isPlayer2AI ? " (AI)" : "");
             float textWidth = mTextPaint.measureText(text);
-            canvas.drawText(text, getWidth() - 10 - textWidth, 55, mTextPaint);
+            canvas.drawText(text, getWidth() - 10 - textWidth / 2f, 55, mTextPaint);
         }
 
 
