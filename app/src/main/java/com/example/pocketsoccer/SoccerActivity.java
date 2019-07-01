@@ -127,9 +127,12 @@ public class SoccerActivity extends AppCompatActivity {
         this.ballMovable.pos = new Vec2(getFieldWidth() / 2f, getFieldHeight() / 2f);
 
         // set random velocity for the ball
-        Vec2 ballVelocity = Vec2.randomNormalized();
-        ballVelocity.multiply(800f);
-        this.ballMovable.velocity = ballVelocity;
+//        Vec2 ballVelocity = Vec2.randomNormalized();
+//        ballVelocity.multiply(800f);
+//        this.ballMovable.velocity = ballVelocity;
+
+        // reset ball velocity
+        this.ballMovable.velocity = Vec2.zero();
 
         // set mass
         this.ballMovable.mass = 80f;
