@@ -797,7 +797,7 @@ public class SoccerActivity extends AppCompatActivity {
         this.movables.clear();
         int numMovables = in.readInt();
         for (int i=0; i < numMovables; i++) {
-            Movable m = loadMovable(in);
+            Movable m = loadMovable(in, this.flagIdPlayer1, this.flagIdPlayer2);
             this.movables.add(m);
         }
 
@@ -840,13 +840,17 @@ public class SoccerActivity extends AppCompatActivity {
 
     }
 
-    Movable loadMovable(DataInputStream in) throws IOException {
+    Movable loadMovable(DataInputStream in, int flagId1, int flagId2) throws IOException {
         Movable m = new Movable();
         m.pos = loadVec2(in);
         m.size = loadVec2(in);
         m.velocity = loadVec2(in);
         m.mass = in.readFloat();
         m.player = in.readInt();
+        if (0 == m.player)
+            m.drawable = this.getResources().getDrawable(flagId1);
+        else if (1 == m.player)
+            m.drawable = this.getResources().getDrawable(flagId2);
         return m;
     }
 
