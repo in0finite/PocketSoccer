@@ -184,7 +184,7 @@ public class SoccerFieldView extends View {
         }
 
         // draw ball
-        if (ballDrawable != null) {
+        if (SoccerActivity.instance.isGameStartedSinceStartup() && ballDrawable != null) {
             drawDrawable(ballDrawable, SoccerActivity.instance.ballMovable.pos, SoccerActivity.instance.ballMovable.size, canvas);
         }
 

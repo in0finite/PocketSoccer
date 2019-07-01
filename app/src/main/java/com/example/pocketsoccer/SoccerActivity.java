@@ -44,6 +44,7 @@ public class SoccerActivity extends AppCompatActivity {
     int scorePlayer1 = 0, scorePlayer2 = 0;
 
     boolean mGameStartedSinceStartup = false;
+    public boolean isGameStartedSinceStartup() { return mGameStartedSinceStartup; }
 
     public boolean isCelebratingGoal = false;
     public float timeWhenStartedCelebratingGoal = 0f;
