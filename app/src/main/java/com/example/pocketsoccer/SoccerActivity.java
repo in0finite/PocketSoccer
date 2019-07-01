@@ -106,14 +106,9 @@ public class SoccerActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_soccer);
 
-        // create custom view
-        //View inflatedView = LayoutInflater.from(this).inflate(R.layout.sample_soccer_field_view, null);
-        //final View customView = ((ViewGroup) inflatedView).getChildAt(0);
         mCustomView = findViewById(R.id.soccerFieldView);
 
-        Log.i(MainActivity.LOG_TAG, "created custom view, class: " + mCustomView.getClass().getName());
-
-        //customView.requestLayout();
+        System.out.println("onCreate() finished");
 
 
     }
@@ -748,8 +743,6 @@ public class SoccerActivity extends AppCompatActivity {
         out.writeInt(this.currentTurnPlayer);
         out.writeFloat(mTimeWhenTurnStarted);
         out.writeInt(this.numTurnsPassed);
-
-        // restore drawables
 
 
     }
