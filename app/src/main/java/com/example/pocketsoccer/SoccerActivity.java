@@ -10,6 +10,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -88,6 +89,10 @@ public class SoccerActivity extends AppCompatActivity {
         this.isPlayer1AI = intent.getBooleanExtra("isAI1", false);
         this.isPlayer2AI = intent.getBooleanExtra("isAI2", false);
 
+        if (savedInstanceState != null)
+            this.loadGameState(savedInstanceState);
+
+        // load flag drawables
         this.flagDrawable1 = getResources().getDrawable(this.flagIdPlayer1);
         this.flagDrawable2 = getResources().getDrawable(this.flagIdPlayer2);
 
@@ -771,6 +776,16 @@ public class SoccerActivity extends AppCompatActivity {
     void saveVec2(Vec2 v, DataOutputStream out) throws IOException {
         out.writeFloat(v.x);
         out.writeFloat(v.y);
+    }
+
+    void loadGameState(Bundle bundle) {
+        try {
+            byte[] data = bundle.getByteArray("data");
+            if (data != null)
+                this.loadGameState(new DataInputStream(new ByteArrayInputStream(data)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     void loadGameState(DataInputStream in) throws IOException {
