@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         // disable button if saved game does not exist
         if (! getSavedGameFile().exists()) {
             mContinueGameButton.setEnabled(false);
+        } else {
+            mContinueGameButton.setEnabled(true);
         }
 
     }
