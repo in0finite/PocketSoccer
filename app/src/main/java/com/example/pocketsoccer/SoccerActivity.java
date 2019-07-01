@@ -10,6 +10,12 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class SoccerActivity extends AppCompatActivity {
@@ -704,6 +710,59 @@ public class SoccerActivity extends AppCompatActivity {
         return (SystemClock.elapsedRealtime() - mStartingTime) / 1000f;
     }
 
+
+    void saveGameState(DataOutputStream out) throws IOException {
+
+        // starting time
+
+        // flag, name, is AI
+        out.writeInt(this.flagIdPlayer1);
+        out.writeInt(this.flagIdPlayer2);
+        out.writeUTF(this.namePlayer1);
+        out.writeUTF(this.namePlayer2);
+        out.writeBoolean(this.isPlayer1AI);
+        out.writeBoolean(this.isPlayer2AI);
+
+        // ball
+        this.saveMovableState(this.ballMovable, out);
+
+        // movables
+        for (Movable movable : this.movables) {
+            this.saveMovableState(movable, out);
+        }
+
+
+    }
+
+    void saveMovableState(Movable m, DataOutputStream out) throws IOException {
+
+        this.saveVec2(m.pos, out);
+        this.saveVec2(m.size, out);
+        this.saveVec2(m.velocity, out);
+        out.writeFloat(m.mass);
+        out.writeInt(m.player);
+
+    }
+
+    void saveVec2(Vec2 v, DataOutputStream out) throws IOException {
+        out.writeFloat(v.x);
+        out.writeFloat(v.y);
+    }
+
+    void loadGameState(DataInputStream in) {
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        super.onSaveInstanceState(outState);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        this.saveGameState(new DataOutputStream(byteArrayOutputStream));
+        outState.putByteArray("data", byteArrayOutputStream.toByteArray());
+
+    }
 
     @Override
     protected void onStop() {
