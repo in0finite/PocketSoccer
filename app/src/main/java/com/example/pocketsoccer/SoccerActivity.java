@@ -154,7 +154,7 @@ public class SoccerActivity extends AppCompatActivity {
             float x = getFieldWidth() / 3f;
             float y = (i + 1) / 4f * getFieldHeight();
 
-            Movable movable = new Movable(new Vec2(x, y), playerSize, Vec2.randomWithMaxLength(600));
+            Movable movable = new Movable(new Vec2(x, y), playerSize, Vec2.zero());
             movable.drawable = getResources().getDrawable(flagId1);
             movable.mass = 80f;
             movable.player = 0;
@@ -163,7 +163,7 @@ public class SoccerActivity extends AppCompatActivity {
             // right side
             x = getFieldWidth() * 2f / 3f;
 
-            movable = new Movable(new Vec2(x, y), playerSize, Vec2.randomWithMaxLength(600));
+            movable = new Movable(new Vec2(x, y), playerSize, Vec2.zero());
             movable.drawable = getResources().getDrawable(flagId2);
             movable.mass = 80f;
             movable.player = 1;
