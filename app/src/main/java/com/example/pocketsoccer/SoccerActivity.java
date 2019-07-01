@@ -115,15 +115,6 @@ public class SoccerActivity extends AppCompatActivity {
 
         //customView.requestLayout();
 
-        // create async task which will update custom view
-        mTask = new MyTask(new Runnable() {
-            @Override
-            public void run() {
-                updateGame();
-            }
-        });
-        mTask.execute();
-
 
     }
 
@@ -878,6 +869,24 @@ public class SoccerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         outState.putByteArray("data", byteArrayOutputStream.toByteArray());
+
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+
+        if (null == mTask) {
+            // create async task which will update the game
+            mTask = new MyTask(new Runnable() {
+                @Override
+                public void run() {
+                    updateGame();
+                }
+            });
+            mTask.execute();
+        }
 
     }
 
