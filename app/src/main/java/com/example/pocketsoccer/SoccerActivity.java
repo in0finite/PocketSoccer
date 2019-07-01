@@ -638,7 +638,9 @@ public class SoccerActivity extends AppCompatActivity {
             // shoot him towards random position on the ball
             Vec2 pos = Vec2.add( this.ballMovable.pos, Vec2.randomWithMaxLength(this.ballMovable.getRadius()) );
 
-            this.performAIMove(movable, pos, opponentGoalCenter);
+            Vec2 pushPos = Vec2.multiply(Vec2.add(pos, opponentGoalCenter), 0.5f);
+
+            this.performAIMove(movable, pos, pushPos);
 
             return;
         }
