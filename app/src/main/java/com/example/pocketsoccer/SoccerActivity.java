@@ -190,7 +190,7 @@ public class SoccerActivity extends AppCompatActivity {
         // check if AI should make a move
         if (mGameStartedSinceStartup && this.isPlayerAI(this.currentTurnPlayer)) {
             // AI is on the move
-            float moveTimeForAI = Math.min(kTurnTime * 0.75f, 2.5f);    // simulate latency
+            float moveTimeForAI = Math.min(kTurnTime * 0.75f, 1.5f);    // simulate latency
             if (getTimeSinceStartup() - mTimeWhenTurnStarted >= moveTimeForAI) {
                 // AI should make a move
                 this.performAIMove(goalRects);
