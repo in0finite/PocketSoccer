@@ -875,6 +875,8 @@ public class SoccerActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
 
+        System.out.println("onStart()");
+
         super.onStart();
 
         if (null == mTask) {
@@ -892,6 +894,8 @@ public class SoccerActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+
+        System.out.println("onStop()");
 
         if (mTask != null) {
             mTask.cancel(false);
