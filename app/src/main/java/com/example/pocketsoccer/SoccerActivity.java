@@ -195,6 +195,16 @@ public class SoccerActivity extends AppCompatActivity {
         if (mIsGameOver)
             return;
 
+        // check if game is over - time expired
+        if (SettingsActivity.isGameLimitedWithTime()) {
+            float gameTimeLimit = SettingsActivity.getGameTimeLimit();
+            if (this.getTimeSinceStartup() >= gameTimeLimit) {
+                // time expired
+                this.onGameOver();
+                return;
+            }
+        }
+
         RectF[] goalRects = new RectF[]{getLeftGoalRect(), getRightGoalRect()};
 
         // perform additional steps for more precise collision
