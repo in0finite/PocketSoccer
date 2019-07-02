@@ -25,6 +25,33 @@ public class StatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
+
+        // setup buttons
+
+        this.findViewById(R.id.buttonExitStats).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onExitButtonPressed();
+            }
+        });
+
+        this.findViewById(R.id.buttonDeleteAllStats).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteAllStats();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        this.populateGameList();
+    }
+
+    void populateGameList() {
+
         // get all games
         List<Game> games = new ArrayList<>();
         try {
@@ -59,6 +86,7 @@ public class StatsActivity extends AppCompatActivity {
         // populate UI
 
         ViewGroup container = this.findViewById(R.id.gamesContainer);
+        container.removeAllViews();
 
         Set<Pair<String, String>> keySet = hashMap.keySet();
         for (final Pair<String, String> pair : keySet) {
@@ -76,21 +104,6 @@ public class StatsActivity extends AppCompatActivity {
             container.addView(textView);
         }
 
-        // setup buttons
-
-        this.findViewById(R.id.buttonExitStats).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onExitButtonPressed();
-            }
-        });
-
-        this.findViewById(R.id.buttonDeleteAllStats).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteAllStats();
-            }
-        });
 
     }
 
@@ -118,6 +131,8 @@ public class StatsActivity extends AppCompatActivity {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
+        this.populateGameList();
 
     }
 
