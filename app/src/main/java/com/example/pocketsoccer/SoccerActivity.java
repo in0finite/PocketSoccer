@@ -1003,10 +1003,13 @@ public class SoccerActivity extends AppCompatActivity {
         }
 
         // save the game
-        File file = MainActivity.instance.getSavedGameFile();
-        this.saveGameState(file);
+        if (!mIsGameOver) {
+            File file = MainActivity.instance.getSavedGameFile();
+            this.saveGameState(file);
+        }
 
         super.onStop();
+
     }
 
 }
