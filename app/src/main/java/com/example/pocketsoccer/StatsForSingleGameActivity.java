@@ -18,6 +18,9 @@ import java.util.List;
 
 public class StatsForSingleGameActivity extends AppCompatActivity {
 
+    String mPlayer1Name = null, mPlayer2Name = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +28,8 @@ public class StatsForSingleGameActivity extends AppCompatActivity {
 
         Intent intent = this.getIntent();
 
-        String player1Name = intent.getStringExtra("player1Name");
-        String player2Name = intent.getStringExtra("player2Name");
+        mPlayer1Name = intent.getStringExtra("player1Name");
+        mPlayer2Name = intent.getStringExtra("player2Name");
 
         int player1Score = intent.getIntExtra("player1Score", 0);
         int player2Score = intent.getIntExtra("player2Score", 0);
@@ -36,7 +39,7 @@ public class StatsForSingleGameActivity extends AppCompatActivity {
 
         List<Game> games = new ArrayList<>();
         try {
-            games = AppDatabase.getInstance(this).gameDao().find(player1Name, player2Name);
+            games = AppDatabase.getInstance(this).gameDao().find(mPlayer1Name, mPlayer2Name);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -56,10 +59,10 @@ public class StatsForSingleGameActivity extends AppCompatActivity {
         // set player names
 
         TextView textViewName1 = this.findViewById(R.id.textViewStatsPlayer1Name);
-        textViewName1.setText(player1Name);
+        textViewName1.setText(mPlayer1Name);
 
         TextView textViewName2 = this.findViewById(R.id.textViewStatsPlayer2Name);
-        textViewName2.setText(player2Name);
+        textViewName2.setText(mPlayer2Name);
 
         // set num wins
 
@@ -94,6 +97,14 @@ public class StatsForSingleGameActivity extends AppCompatActivity {
     }
 
     void removeGameStats() {
+
+        try {
+            AppDatabase.getInstance(this).gameDao().delete(mPlayer1Name, mPlayer2Name);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        this.finish();
 
     }
 

@@ -20,6 +20,10 @@ public interface GameDao {
             "player2Name = :player2")
     List<Game> find(String player1, String player2);
 
+    @Query("DELETE FROM game WHERE player1Name = :player1 AND " +
+            "player2Name = :player2")
+    void delete(String player1, String player2);
+
     @Insert
     void insertAll(Game... games);
 
