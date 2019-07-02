@@ -4,6 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.pocketsoccer.db.AppDatabase;
 import com.example.pocketsoccer.db.Game;
@@ -30,9 +35,66 @@ public class StatsForSingleGameActivity extends AppCompatActivity {
 
         List<Game> games = AppDatabase.getInstance(this).gameDao().find(player1Name, player2Name);
 
-        // populate UI
+        // populate list of games
 
+        ViewGroup container = this.findViewById(R.id.gameStatsContainer);
+
+        for (Game game : games) {
+            TextView textView = new TextView(this);
+            textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            textView.setText(game.player1Score + " : " + game.player2Score + "     " + game.timeWhenFinished.toString());
+            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+            container.addView(textView);
+        }
+
+        // set player names
+
+        TextView textViewName1 = this.findViewById(R.id.textViewStatsPlayer1Name);
+        textViewName1.setText(player1Name);
+
+        TextView textViewName2 = this.findViewById(R.id.textViewStatsPlayer2Name);
+        textViewName2.setText(player1Name);
+
+        // set num wins
+
+        int numWins1 = 0, numWins2 = 0;
+        for (Game game : games) {
+            if (game.player1Score > game.player2Score)
+                numWins1 ++;
+            else if(game.player1Score < game.player2Score)
+                numWins2 ++;
+        }
+
+        ((TextView)this.findViewById(R.id.textViewNumWins1)).setText("" + numWins1);
+        ((TextView)this.findViewById(R.id.textViewNumWins2)).setText("" + numWins2);
+
+        // setup buttons
+
+        this.findViewById(R.id.buttonRemoveGameStats).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeGameStats();
+            }
+        });
+
+        this.findViewById(R.id.buttonExitSingleGameStats).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onOkButton();
+            }
+        });
 
 
     }
+
+    void removeGameStats() {
+
+    }
+
+    void onOkButton() {
+
+        this.finish();
+
+    }
+
 }
