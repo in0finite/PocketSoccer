@@ -141,6 +141,10 @@ public class SettingsActivity extends AppCompatActivity {
     public static int getTerrainDrawableId() {
         if (0 == mTerrainType)
             return R.drawable.field;
+        else if (1 == mTerrainType)
+            return R.drawable.concrete;
+        else if (2 == mTerrainType)
+            return R.drawable.parquet;
         else
             return 0;
     }
