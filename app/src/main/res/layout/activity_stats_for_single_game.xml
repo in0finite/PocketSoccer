@@ -93,6 +93,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="Wins"
+                android:textColor="#FFC107"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -119,6 +120,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="TextView"
+                android:textColor="#FFC107"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -134,6 +136,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="TextView"
+                android:textColor="#FFC107"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
