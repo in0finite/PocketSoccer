@@ -48,6 +48,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        this.findViewById(R.id.settingsButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSettings();
+            }
+        });
+
 
     }
 
@@ -91,6 +98,13 @@ public class MainActivity extends AppCompatActivity {
 
     public File getSavedGameFile() {
         return new File(getFilesDir().getPath() + "/" + savedGameFileName);
+    }
+
+    void openSettings() {
+
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+
     }
 
 }
