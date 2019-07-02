@@ -15,8 +15,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".StatsForSingleGameActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
-
+        <activity android:name=".StatsForSingleGameActivity"
+            android:parentActivityName=".StatsActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StatsActivity" />
         </activity>
         <activity
             android:name=".SettingsActivity"

@@ -135,6 +135,8 @@ public class NewGameActivity extends AppCompatActivity {
         intent.putExtra("isAI1", mCheckBoxIsAI1.isChecked());
         intent.putExtra("isAI2", mCheckBoxIsAI2.isChecked());
         startActivity(intent);
+
+        //this.finish();
     }
 
 }
