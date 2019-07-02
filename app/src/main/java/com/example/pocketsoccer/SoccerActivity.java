@@ -111,7 +111,7 @@ public class SoccerActivity extends AppCompatActivity {
 
         // assign image ids
         ballImageId = R.drawable.football_ball_2426_2380_resized;
-        fieldImageId = R.drawable.field;
+        fieldImageId = SettingsActivity.getTerrainDrawableId();
 
         setContentView(R.layout.activity_soccer);
 
