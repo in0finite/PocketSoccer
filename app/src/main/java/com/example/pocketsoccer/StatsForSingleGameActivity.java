@@ -59,7 +59,7 @@ public class StatsForSingleGameActivity extends AppCompatActivity {
         textViewName1.setText(player1Name);
 
         TextView textViewName2 = this.findViewById(R.id.textViewStatsPlayer2Name);
-        textViewName2.setText(player1Name);
+        textViewName2.setText(player2Name);
 
         // set num wins
 
