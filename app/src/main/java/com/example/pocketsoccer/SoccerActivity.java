@@ -629,7 +629,7 @@ public class SoccerActivity extends AppCompatActivity {
         this.startActivity(intent);
 
         // finish this activity
-        //this.finish();
+        this.finish();
 
     }
 
