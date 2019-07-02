@@ -126,6 +126,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         editor.commit();
 
+        this.finish();
+
     }
 
     void resetPreferences() {
