@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.pocketsoccer.db.AppDatabase;
 import com.example.pocketsoccer.db.Game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StatsForSingleGameActivity extends AppCompatActivity {
@@ -33,7 +34,12 @@ public class StatsForSingleGameActivity extends AppCompatActivity {
         float timeElapsed = intent.getFloatExtra("timeElapsed", 0f);
         long timeWhenFinished = intent.getLongExtra("timeWhenFinished", 0);
 
-        List<Game> games = AppDatabase.getInstance(this).gameDao().find(player1Name, player2Name);
+        List<Game> games = new ArrayList<>();
+        try {
+            games = AppDatabase.getInstance(this).gameDao().find(player1Name, player2Name);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         // populate list of games
 
