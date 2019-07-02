@@ -412,6 +412,16 @@ public class SoccerActivity extends AppCompatActivity {
                 this.timeWhenStartedCelebratingGoal = getTimeSinceStartup();
                 mNextPlayerWhenCelebrationFinishes = isLeftGoal ? 0 : 1 ;
             }
+
+            // check for game over
+            if (SettingsActivity.isGameLimitedWithNumGoals()) {
+                int goalLimit = SettingsActivity.getGoalLimit();
+                if (this.scorePlayer1 >= goalLimit || this.scorePlayer2 >= goalLimit) {
+                    // game over
+                    this.onGameOver();
+                }
+            }
+
         }
 
         mWasBallInsideGoalLastTime = isInsideAnyGoal;
