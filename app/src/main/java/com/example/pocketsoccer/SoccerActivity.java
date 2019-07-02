@@ -621,6 +621,15 @@ public class SoccerActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
 
+        // delete saved game if it exists
+        try {
+            File savedGameFile = MainActivity.instance.getSavedGameFile();
+            if (savedGameFile.exists())
+                savedGameFile.delete();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
         // start stats activity
 
         Intent intent = new Intent(this, StatsForSingleGameActivity.class);
