@@ -3,6 +3,7 @@ package com.example.pocketsoccer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -57,10 +58,28 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        this.findViewById(R.id.buttonSaveSettings).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                savePreferences();
+            }
+        });
 
+        this.findViewById(R.id.buttonResetSettings).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetPreferences();
+            }
+        });
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         // load preferences and display them
         this.loadPreferences();
-
     }
 
     void loadPreferences() {
@@ -68,6 +87,10 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     void savePreferences() {
+
+    }
+
+    void resetPreferences() {
 
     }
 
