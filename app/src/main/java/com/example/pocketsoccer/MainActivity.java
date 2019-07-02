@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.pocketsoccer.db.AppDatabase;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -54,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
                 openSettings();
             }
         });
+
+
+        // init database at start, so it doesn't block later
+        try {
+            AppDatabase.getInstance(this).gameDao();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
 
     }
