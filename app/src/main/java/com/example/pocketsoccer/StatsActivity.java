@@ -2,6 +2,7 @@ package com.example.pocketsoccer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -95,6 +96,13 @@ public class StatsActivity extends AppCompatActivity {
 
     void onGameClicked(Pair<String, String> playerPair) {
 
+        // start stats activity for single player pair
+
+        Intent intent = new Intent(this, StatsForSingleGameActivity.class);
+        intent.putExtra("player1Name", playerPair.valueA);
+        intent.putExtra("player2Name", playerPair.valueB);
+        this.startActivity(intent);
+
     }
 
     void onExitButtonPressed() {
@@ -105,7 +113,11 @@ public class StatsActivity extends AppCompatActivity {
 
     void deleteAllStats() {
 
-
+        try {
+            AppDatabase.getInstance(this).gameDao().deleteAll();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 

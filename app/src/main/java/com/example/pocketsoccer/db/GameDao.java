@@ -24,6 +24,9 @@ public interface GameDao {
             "player2Name = :player2")
     void delete(String player1, String player2);
 
+    @Query("DELETE FROM game")
+    void deleteAll();
+
     @Insert
     void insertAll(Game... games);
 
