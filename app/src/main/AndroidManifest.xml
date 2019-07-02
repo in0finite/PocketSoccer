@@ -15,7 +15,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".StatsForSingleGameActivity" />
+        <activity android:name=".StatsForSingleGameActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity"
