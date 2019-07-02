@@ -21,6 +21,8 @@ public class SettingsActivity extends AppCompatActivity {
     SeekBar mGameSpeedSeekBar;
     TextView mGameSpeedTextView;
 
+    static int mTerrainType = -1, mGameEndCondition = -1, mGameSpeed = 10;
+
 
 
     @Override
@@ -90,18 +92,22 @@ public class SettingsActivity extends AppCompatActivity {
         mGameSpeedTextView.setText("Game speed: " + (mGameSpeedSeekBar.getProgress() / 10f));
     }
 
+    void updateUI() {
+        mTerrainSpinner.setSelection(mTerrainType);
+        mGameEndConditionSpinner.setSelection(mGameEndCondition);
+        mGameSpeedSeekBar.setProgress(mGameSpeed);
+        updateSeekBarText();
+    }
+
     void loadPreferences() {
 
         SharedPreferences sharedPref = this.getSharedPreferences("main", Context.MODE_PRIVATE);
 
-        int terrainType = sharedPref.getInt("terrainType", 0);
-        int gameEndCondition = sharedPref.getInt("gameEndCondition", 3);
-        int gameSpeed = sharedPref.getInt("gameSpeed", 10);
+        mTerrainType = sharedPref.getInt("terrainType", 0);
+        mGameEndCondition = sharedPref.getInt("gameEndCondition", 3);
+        mGameSpeed = sharedPref.getInt("gameSpeed", 10);
 
-        mTerrainSpinner.setSelection(terrainType);
-        mGameEndConditionSpinner.setSelection(gameEndCondition);
-        mGameSpeedSeekBar.setProgress(gameSpeed);
-        updateSeekBarText();
+        updateUI();
 
     }
 
@@ -110,9 +116,13 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences sharedPref = this.getSharedPreferences("main", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        editor.putInt("terrainType", mTerrainSpinner.getSelectedItemPosition());
-        editor.putInt("gameEndCondition", mGameEndConditionSpinner.getSelectedItemPosition());
-        editor.putInt("gameSpeed", mGameSpeedSeekBar.getProgress());
+        mTerrainType = mTerrainSpinner.getSelectedItemPosition();
+        mGameEndCondition = mGameEndConditionSpinner.getSelectedItemPosition();
+        mGameSpeed = mGameSpeedSeekBar.getProgress();
+
+        editor.putInt("terrainType", mTerrainType);
+        editor.putInt("gameEndCondition", mGameEndCondition);
+        editor.putInt("gameSpeed", mGameSpeed);
 
         editor.commit();
 
