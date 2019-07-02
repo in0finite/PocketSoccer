@@ -21,7 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
     SeekBar mGameSpeedSeekBar;
     TextView mGameSpeedTextView;
 
-    static int mTerrainType = -1, mGameEndCondition = -1, mGameSpeed = 10;
+    static int mTerrainType = 0, mGameEndCondition = 3, mGameSpeed = 10;
 
 
 
