@@ -2,6 +2,9 @@ package com.example.pocketsoccer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,6 +22,7 @@ public class SettingsActivity extends AppCompatActivity {
     TextView mGameSpeedTextView;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,19 +36,17 @@ public class SettingsActivity extends AppCompatActivity {
         ArrayList<String> terrainTypes = new ArrayList<>(Arrays.asList("Grass", "Concrete", "Parquet"));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, terrainTypes);
         mTerrainSpinner.setAdapter(adapter);
-        mTerrainSpinner.setSelection(0);
 
         String[] gameEndTypes = new String[]{"30 s", "1 min", "2 min", "5 min", "1 goal", "2 goals", "4 goals", "10 goals"};
         adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, gameEndTypes);
         mGameEndConditionSpinner.setAdapter(adapter);
-        mGameEndConditionSpinner.setSelection(3);
 
         mGameSpeedSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (seekBar.getProgress() < 0)
                     seekBar.setProgress(0);
-                mGameSpeedTextView.setText("Game speed: " + seekBar.getProgress());
+                updateSeekBarText();
             }
 
             @Override
@@ -73,6 +75,8 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
+        //this.resetPreferences();
+
     }
 
     @Override
@@ -82,15 +86,69 @@ public class SettingsActivity extends AppCompatActivity {
         this.loadPreferences();
     }
 
+    void updateSeekBarText() {
+        mGameSpeedTextView.setText("Game speed: " + (mGameSpeedSeekBar.getProgress() / 10f));
+    }
+
     void loadPreferences() {
+
+        SharedPreferences sharedPref = this.getSharedPreferences("main", Context.MODE_PRIVATE);
+
+        int terrainType = sharedPref.getInt("terrainType", 0);
+        int gameEndCondition = sharedPref.getInt("gameEndCondition", 3);
+        int gameSpeed = sharedPref.getInt("gameSpeed", 10);
+
+        mTerrainSpinner.setSelection(terrainType);
+        mGameEndConditionSpinner.setSelection(gameEndCondition);
+        mGameSpeedSeekBar.setProgress(gameSpeed);
+        updateSeekBarText();
 
     }
 
     void savePreferences() {
 
+        SharedPreferences sharedPref = this.getSharedPreferences("main", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putInt("terrainType", mTerrainSpinner.getSelectedItemPosition());
+        editor.putInt("gameEndCondition", mGameEndConditionSpinner.getSelectedItemPosition());
+        editor.putInt("gameSpeed", mGameSpeedSeekBar.getProgress());
+
+        editor.commit();
+
     }
 
     void resetPreferences() {
+
+        mTerrainSpinner.setSelection(0);
+        mGameEndConditionSpinner.setSelection(3);
+        mGameSpeedSeekBar.setProgress(10);
+        updateSeekBarText();
+
+    }
+
+
+    public static Drawable getTerrainDrawable() {
+
+    }
+
+    public static boolean isGameLimitedWithTime() {
+
+    }
+
+    public static boolean isGameLimitedWithNumGoals() {
+        return ! isGameLimitedWithTime();
+    }
+
+    public static float getGameTimeLimit() {
+
+    }
+
+    public static int getGoalLimit() {
+
+    }
+
+    public static float getGameSpeed() {
 
     }
 
