@@ -67,4 +67,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    void savePreferences() {
+
+    }
+
 }
