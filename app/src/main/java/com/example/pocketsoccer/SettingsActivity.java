@@ -89,23 +89,33 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     void updateSeekBarText() {
-        mGameSpeedTextView.setText("Game speed: " + (mGameSpeedSeekBar.getProgress() / 10f));
+        if (mGameSpeedTextView != null)
+            mGameSpeedTextView.setText("Game speed: " + (mGameSpeedSeekBar.getProgress() / 10f));
     }
 
     void updateUI() {
-        mTerrainSpinner.setSelection(mTerrainType);
-        mGameEndConditionSpinner.setSelection(mGameEndCondition);
-        mGameSpeedSeekBar.setProgress(mGameSpeed);
+        if (mTerrainSpinner != null)
+            mTerrainSpinner.setSelection(mTerrainType);
+        if (mGameEndConditionSpinner != null)
+            mGameEndConditionSpinner.setSelection(mGameEndCondition);
+        if (mGameSpeedSeekBar != null)
+            mGameSpeedSeekBar.setProgress(mGameSpeed);
         updateSeekBarText();
     }
 
-    void loadPreferences() {
+    static void loadPreferencesWithoutUIUpdate(Context context) {
 
-        SharedPreferences sharedPref = this.getSharedPreferences("main", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = context.getSharedPreferences("main", Context.MODE_PRIVATE);
 
         mTerrainType = sharedPref.getInt("terrainType", 0);
         mGameEndCondition = sharedPref.getInt("gameEndCondition", 3);
         mGameSpeed = sharedPref.getInt("gameSpeed", 10);
+
+    }
+
+    void loadPreferences() {
+
+        loadPreferencesWithoutUIUpdate(this);
 
         updateUI();
 
