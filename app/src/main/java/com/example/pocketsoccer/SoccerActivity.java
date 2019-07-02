@@ -623,7 +623,7 @@ public class SoccerActivity extends AppCompatActivity {
 
         // start stats activity
 
-        Intent intent = new Intent();
+        Intent intent = new Intent(this, StatsForSingleGameActivity.class);
         intent.putExtra("player1Name", this.namePlayer1);
         intent.putExtra("player2Name", this.namePlayer2);
         this.startActivity(intent);
