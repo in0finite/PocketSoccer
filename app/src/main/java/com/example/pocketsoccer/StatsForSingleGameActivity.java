@@ -14,6 +14,7 @@ import com.example.pocketsoccer.db.AppDatabase;
 import com.example.pocketsoccer.db.Game;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class StatsForSingleGameActivity extends AppCompatActivity {
@@ -51,7 +52,7 @@ public class StatsForSingleGameActivity extends AppCompatActivity {
         for (Game game : games) {
             TextView textView = new TextView(this);
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            textView.setText(game.player1Score + " : " + game.player2Score + "     " + game.timeWhenFinished.toString());
+            textView.setText(game.player1Score + " : " + game.player2Score + "     " + new Date(game.timeWhenFinished));
             textView.setGravity(Gravity.CENTER_HORIZONTAL);
             container.addView(textView);
         }

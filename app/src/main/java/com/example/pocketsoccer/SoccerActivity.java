@@ -612,7 +612,7 @@ public class SoccerActivity extends AppCompatActivity {
         game.player2Name = this.namePlayer2;
         game.player1Score = this.scorePlayer1;
         game.player2Score = this.scorePlayer2;
-        game.timeWhenFinished = new Date();
+        game.timeWhenFinished = new Date().getTime();
         game.timeElapsed = this.getTimeSinceStartup();
 
         try {

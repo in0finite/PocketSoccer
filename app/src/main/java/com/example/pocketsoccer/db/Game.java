@@ -28,6 +28,6 @@ public class Game {
     public float timeElapsed;
 
     @ColumnInfo(name = "timeWhenFinished")
-    public Date timeWhenFinished;
+    public long timeWhenFinished;
 
 }
