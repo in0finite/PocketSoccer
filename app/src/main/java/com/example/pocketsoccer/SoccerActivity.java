@@ -10,6 +10,9 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
+import com.example.pocketsoccer.db.AppDatabase;
+import com.example.pocketsoccer.db.Game;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -21,6 +24,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SoccerActivity extends AppCompatActivity {
 
@@ -53,6 +57,8 @@ public class SoccerActivity extends AppCompatActivity {
     float mPosDeltaAfterCollision = 0f;
 
     int scorePlayer1 = 0, scorePlayer2 = 0;
+
+    boolean mIsGameOver = false;
 
     boolean mGameStartedSinceStartup = false;
     public boolean isGameStartedSinceStartup() { return mGameStartedSinceStartup; }
@@ -185,6 +191,9 @@ public class SoccerActivity extends AppCompatActivity {
     }
 
     void updateGame() {
+
+        if (mIsGameOver)
+            return;
 
         RectF[] goalRects = new RectF[]{getLeftGoalRect(), getRightGoalRect()};
 
@@ -568,6 +577,41 @@ public class SoccerActivity extends AppCompatActivity {
                 (pos.y + size.y / 2f));
     }
 
+
+    void onGameOver() {
+
+        if (mIsGameOver)
+            return;
+
+        mIsGameOver = true;
+
+        // insert game into db
+
+        Game game = new Game();
+        game.player1Name = this.namePlayer1;
+        game.player2Name = this.namePlayer2;
+        game.player1Score = this.scorePlayer1;
+        game.player2Score = this.scorePlayer2;
+        game.timeWhenFinished = new Date();
+        game.timeElapsed = this.getTimeSinceStartup();
+
+        try {
+            AppDatabase.getInstance(this).gameDao().insertAll(game);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        // start stats activity
+
+        Intent intent = new Intent();
+        intent.putExtra("player1Name", this.namePlayer1);
+        intent.putExtra("player2Name", this.namePlayer2);
+        this.startActivity(intent);
+
+        // finish this activity
+        //this.finish();
+
+    }
 
     void nextTurn() {
         this.currentTurnPlayer = (this.currentTurnPlayer + 1) % 2;
