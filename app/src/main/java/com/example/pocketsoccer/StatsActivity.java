@@ -73,8 +73,9 @@ public class StatsActivity extends AppCompatActivity {
                 increment2 = 1;
 
             Pair<String, String> pair = new Pair<>(game.player1Name, game.player2Name);
-            if (hashMapContainsKey(hashMap, pair)) {
-                Pair<Integer, Integer> resultPair = hashMap.get(pair);
+            Pair<String, String> matchingKey = getMatchingKey(hashMap, pair);
+            if (matchingKey != null) {
+                Pair<Integer, Integer> resultPair = hashMap.get(matchingKey);
                 resultPair.valueA += increment1;
                 resultPair.valueB += increment2;
             } else {
@@ -107,8 +108,12 @@ public class StatsActivity extends AppCompatActivity {
 
     }
 
-    static boolean hashMapContainsKey(HashMap<Pair<String, String>, Pair<Integer, Integer>> hashMap, Pair<String, String> key) {
-        return hashMap.keySet().contains(key);
+    static Pair<String, String> getMatchingKey(HashMap<Pair<String, String>, Pair<Integer, Integer>> hashMap, Pair<String, String> key) {
+        for(Pair<String, String> pair : hashMap.keySet()) {
+            if (pair.valueA.equals(key.valueA) && pair.valueB.equals(key.valueB))
+                return pair;
+        }
+        return null;
     }
 
     void onGameClicked(Pair<String, String> playerPair) {
