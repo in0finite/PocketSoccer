@@ -138,12 +138,15 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-    public static Drawable getTerrainDrawable() {
-
+    public static int getTerrainDrawableId() {
+        if (0 == mTerrainType)
+            return R.drawable.field;
+        else
+            return 0;
     }
 
     public static boolean isGameLimitedWithTime() {
-
+        return mGameEndCondition < 4;
     }
 
     public static boolean isGameLimitedWithNumGoals() {
@@ -151,15 +154,17 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public static float getGameTimeLimit() {
-
+        float[] times = new float[]{30, 60, 120, 300};
+        return times[mGameEndCondition];
     }
 
     public static int getGoalLimit() {
-
+        int[] nums = new int[]{1, 2, 4, 10};
+        return nums[mGameEndCondition - 4];
     }
 
     public static float getGameSpeed() {
-
+        return mGameSpeed / 10f;
     }
 
 }
