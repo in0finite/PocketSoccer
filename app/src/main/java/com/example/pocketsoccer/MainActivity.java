@@ -50,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        this.findViewById(R.id.statsButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openStats();
+            }
+        });
+
         this.findViewById(R.id.settingsButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +121,13 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+
+    }
+
+    void openStats() {
+
+        Intent intent = new Intent(this, StatsActivity.class);
+        this.startActivity(intent);
 
     }
 
