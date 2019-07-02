@@ -250,7 +250,7 @@ public class SoccerActivity extends AppCompatActivity {
         movable.hadCollisionWithStaticObject = false;
 
         // update position based on velocity
-        movable.pos.add(Vec2.multiply(movable.velocity, deltaTime));
+        movable.pos.add(Vec2.multiply(movable.velocity, deltaTime * SettingsActivity.getGameSpeed()));
 
         float fieldWidth = mCustomView.getWidth();
         float fieldHeight = mCustomView.getHeight();
