@@ -624,8 +624,10 @@ public class SoccerActivity extends AppCompatActivity {
         // delete saved game if it exists
         try {
             File savedGameFile = MainActivity.instance.getSavedGameFile();
-            if (savedGameFile.exists())
+            if (savedGameFile.exists()) {
+                System.out.println("deleting saved game");
                 savedGameFile.delete();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
