@@ -13,7 +13,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static AppDatabase getInstance(Context context) {
         if (null == sDatabase) {
-            sDatabase = Room.databaseBuilder(context, AppDatabase.class, "games").allowMainThreadQueries().build();
+            sDatabase = Room.databaseBuilder(context, AppDatabase.class, "games").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         }
         return sDatabase;
     }
