@@ -97,7 +97,7 @@ public class StatsActivity extends AppCompatActivity {
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             textView.setText(pair.valueA + "     " + resultPair.valueA + " : " + resultPair.valueB + "     " + pair.valueB);
             textView.setGravity(Gravity.CENTER_HORIZONTAL);
-            textView.setTextColor(Color.YELLOW);
+            textView.setTextColor(Color.RED);
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

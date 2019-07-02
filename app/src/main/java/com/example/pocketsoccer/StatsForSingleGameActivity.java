@@ -55,7 +55,7 @@ public class StatsForSingleGameActivity extends AppCompatActivity {
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             textView.setText(game.player1Score + " : " + game.player2Score + "     " + new Date(game.timeWhenFinished));
             textView.setGravity(Gravity.CENTER_HORIZONTAL);
-            textView.setTextColor(Color.YELLOW);
+            textView.setTextColor(Color.RED);
             container.addView(textView);
         }
 
