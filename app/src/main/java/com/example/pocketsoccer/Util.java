@@ -46,14 +46,30 @@ public class Util {
 
     public static MediaPlayer playSameSound(MediaPlayer mediaPlayer, int soundResId, Context context) {
 
+        //return Util.playSound(mediaPlayer, soundResId, context);
+
         if (null == mediaPlayer) {
             mediaPlayer = MediaPlayer.create(context, soundResId);
             mediaPlayer.start();
         } else {
-            if (mediaPlayer.isPlaying())
-                mediaPlayer.stop();
-            mediaPlayer.reset();
+
+//            if (mediaPlayer.isPlaying())
+//                mediaPlayer.seekTo(0);
+//            else
+//                mediaPlayer.start();
+
+
+//            mediaPlayer.reset();
+//            try {
+//                mediaPlayer.prepare();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            mediaPlayer.start();
+
+            mediaPlayer.seekTo(0);
             mediaPlayer.start();
+
         }
 
         return mediaPlayer;

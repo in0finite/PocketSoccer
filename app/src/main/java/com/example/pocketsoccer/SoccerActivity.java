@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 
 import com.example.pocketsoccer.db.AppDatabase;
@@ -19,11 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -78,7 +73,7 @@ public class SoccerActivity extends AppCompatActivity {
 
     public Drawable flagDrawable1,flagDrawable2;
 
-    static MediaPlayer sDiskSoundPlayer;
+    MediaPlayer mDiskSoundPlayer;
 
     MyTask mTask;
     View mCustomView;
@@ -461,7 +456,7 @@ public class SoccerActivity extends AppCompatActivity {
                     if (! movableA.getClass().equals(movableB.getClass())) {
                         // play sound
                         try {
-                            sDiskSoundPlayer = Util.playSameSound(sDiskSoundPlayer, R.raw.disk_short, this);
+                            //mDiskSoundPlayer = Util.playSound(mDiskSoundPlayer, R.raw.disk_short, this);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -1005,6 +1000,13 @@ public class SoccerActivity extends AppCompatActivity {
             mTask.execute();
         }
 
+        // create media player
+        try {
+            mDiskSoundPlayer = MediaPlayer.create(this, R.raw.disk_short);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
 
     @Override
@@ -1021,6 +1023,15 @@ public class SoccerActivity extends AppCompatActivity {
         if (!mIsGameOver) {
             File file = MainActivity.instance.getSavedGameFile();
             this.saveGameState(file);
+        }
+
+        try {
+            if (mDiskSoundPlayer != null) {
+                mDiskSoundPlayer.release();
+                mDiskSoundPlayer = null;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         super.onStop();
