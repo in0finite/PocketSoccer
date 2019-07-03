@@ -3,6 +3,7 @@ package com.example.pocketsoccer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String savedGameFileName = "SavedGame.bin";
 
     public static MainActivity instance = null;
+
+    static MediaPlayer sMediaPlayer;
 
     Button mContinueGameButton;
 
@@ -131,6 +134,21 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, StatsActivity.class);
         this.startActivity(intent);
+
+    }
+
+    public static void playSound(int soundResId) {
+
+        if (sMediaPlayer != null) {
+            if (sMediaPlayer.isPlaying())
+                sMediaPlayer.stop();
+            sMediaPlayer.release();
+        }
+
+        sMediaPlayer = null;
+
+        sMediaPlayer = MediaPlayer.create(MainActivity.instance, soundResId);
+        sMediaPlayer.start();
 
     }
 
