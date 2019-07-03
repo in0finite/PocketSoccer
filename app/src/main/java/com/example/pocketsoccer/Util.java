@@ -1,6 +1,10 @@
 package com.example.pocketsoccer;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Path;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 
 import java.io.File;
@@ -73,6 +77,25 @@ public class Util {
         }
 
         return mediaPlayer;
+    }
+
+    public static Bitmap getBitmapClippedCircle(Bitmap bitmap, int width, int height) {
+
+        //final int width = bitmap.getWidth();
+        //final int height = bitmap.getHeight();
+        final Bitmap outputBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        final Path path = new Path();
+        path.addCircle(
+                (float)(width / 2)
+                , (float)(height / 2)
+                , (float) Math.min(width, (height / 2))
+                , Path.Direction.CCW);
+
+        final Canvas canvas = new Canvas(outputBitmap);
+        canvas.clipPath(path);
+        canvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()), new Rect(0, 0, width, height), null);
+        return outputBitmap;
     }
 
 }

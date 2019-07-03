@@ -3,6 +3,8 @@ package com.example.pocketsoccer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -35,6 +37,8 @@ public class SoccerActivity extends AppCompatActivity {
     public int flagIdPlayer1 = 0, flagIdPlayer2 = 0;
     public String namePlayer1 = "", namePlayer2 = "";
     public boolean isPlayer1AI = false, isPlayer2AI = false;
+
+    public static final Vec2 kPlayerSize = new Vec2(100, 100);
 
     public boolean isDeathMatchModeOn = false;
 
@@ -161,7 +165,13 @@ public class SoccerActivity extends AppCompatActivity {
 
     void createPlayers(int flagId1, int flagId2) {
 
-        Vec2 playerSize = new Vec2(100, 100);
+        Vec2 playerSize = kPlayerSize.clone();
+
+        Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), flagId1);
+        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), flagId2);
+
+        bitmap1 = Util.getBitmapClippedCircle(bitmap1, (int)kPlayerSize.x, (int)kPlayerSize.y);
+        bitmap2 = Util.getBitmapClippedCircle(bitmap2, (int)kPlayerSize.x, (int)kPlayerSize.y);
 
         for (int i=0; i < 3; i++) {
 
@@ -170,7 +180,7 @@ public class SoccerActivity extends AppCompatActivity {
             float y = (i + 1) / 4f * getFieldHeight();
 
             Movable movable = new Movable(new Vec2(x, y), playerSize, Vec2.zero());
-            movable.drawable = getResources().getDrawable(flagId1);
+            movable.bitmap = bitmap1;
             movable.mass = 80f;
             movable.player = 0;
             this.movables.add(movable);
@@ -179,7 +189,7 @@ public class SoccerActivity extends AppCompatActivity {
             x = getFieldWidth() * 2f / 3f;
 
             movable = new Movable(new Vec2(x, y), playerSize, Vec2.zero());
-            movable.drawable = getResources().getDrawable(flagId2);
+            movable.bitmap = bitmap2;
             movable.mass = 80f;
             movable.player = 1;
             this.movables.add(movable);
@@ -897,6 +907,12 @@ public class SoccerActivity extends AppCompatActivity {
         this.isPlayer1AI = in.readBoolean();
         this.isPlayer2AI = in.readBoolean();
 
+        // create bitmaps
+        Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), this.flagIdPlayer1);
+        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), this.flagIdPlayer2);
+        bitmap1 = Util.getBitmapClippedCircle(bitmap1, (int)kPlayerSize.x, (int)kPlayerSize.y);
+        bitmap2 = Util.getBitmapClippedCircle(bitmap2, (int)kPlayerSize.x, (int)kPlayerSize.y);
+
         // ball
         //loadMovable(in);
 
@@ -904,7 +920,7 @@ public class SoccerActivity extends AppCompatActivity {
         this.movables.clear();
         int numMovables = in.readInt();
         for (int i=0; i < numMovables; i++) {
-            Movable m = loadMovable(in, this.flagIdPlayer1, this.flagIdPlayer2);
+            Movable m = loadMovable(in, this.flagIdPlayer1, this.flagIdPlayer2, bitmap1, bitmap2);
             this.movables.add(m);
         }
 
@@ -947,17 +963,21 @@ public class SoccerActivity extends AppCompatActivity {
 
     }
 
-    Movable loadMovable(DataInputStream in, int flagId1, int flagId2) throws IOException {
+    Movable loadMovable(DataInputStream in, int flagId1, int flagId2, Bitmap bitmap1, Bitmap bitmap2) throws IOException {
         Movable m = new Movable();
         m.pos = loadVec2(in);
         m.size = loadVec2(in);
         m.velocity = loadVec2(in);
         m.mass = in.readFloat();
         m.player = in.readInt();
+//        if (0 == m.player)
+//            m.drawable = this.getResources().getDrawable(flagId1);
+//        else if (1 == m.player)
+//            m.drawable = this.getResources().getDrawable(flagId2);
         if (0 == m.player)
-            m.drawable = this.getResources().getDrawable(flagId1);
+            m.bitmap = bitmap1;
         else if (1 == m.player)
-            m.drawable = this.getResources().getDrawable(flagId2);
+            m.bitmap = bitmap2;
         return m;
     }
 

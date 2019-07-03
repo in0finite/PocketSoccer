@@ -27,7 +27,7 @@ public class SoccerFieldView extends View {
     Drawable ballDrawable;
     Drawable fieldDrawable;
 
-    Paint ballPaint, fieldPaint, goalPostPaint, goalCornerPaint, scoreRectPaint, selectedDiskPaint, celebrationPaint;
+    Paint ballPaint, fieldPaint, goalPostPaint, goalCornerPaint, scoreRectPaint, selectedDiskPaint, celebrationPaint, movablePaint;
 
     Vec2 touchStartPos = new Vec2();
 
@@ -107,6 +107,9 @@ public class SoccerFieldView extends View {
         celebrationPaint.setStyle(Paint.Style.FILL);
         celebrationPaint.setColor(Color.argb(128, 128, 128, 128));
 
+        movablePaint = new Paint();
+        movablePaint.setFlags(Paint.ANTI_ALIAS_FLAG);
+
 
         ballDrawable = getResources().getDrawable(SoccerActivity.ballImageId);
         fieldDrawable = getResources().getDrawable(SoccerActivity.fieldImageId);
@@ -179,8 +182,10 @@ public class SoccerFieldView extends View {
 
         // draw movables
         for (Movable movable : SoccerActivity.instance.movables) {
-            if (movable.drawable != null)
-                drawDrawable(movable.drawable, movable.pos, movable.size, canvas);
+            if (movable.bitmap != null)
+                canvas.drawBitmap(movable.bitmap, movable.pos.x - movable.size.x / 2f, movable.pos.y - movable.size.y / 2f, movablePaint);
+//            if (movable.drawable != null)
+//                drawDrawable(movable.drawable, movable.pos, movable.size, canvas);
         }
 
         // draw ball

@@ -1,5 +1,6 @@
 package com.example.pocketsoccer;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 public class Movable {
@@ -8,7 +9,8 @@ public class Movable {
     public Vec2 velocity = new Vec2();
     public float mass = 0f;
     //public int drawableId = 0;
-    public Drawable drawable = null;
+    //public Drawable drawable = null;
+    public Bitmap bitmap = null;
     public int player = -1;
     public boolean hadCollisionWithStaticObject = false;
 
