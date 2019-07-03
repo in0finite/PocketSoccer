@@ -423,6 +423,9 @@ public class SoccerActivity extends AppCompatActivity {
                 mNextPlayerWhenCelebrationFinishes = isLeftGoal ? 0 : 1 ;
             }
 
+            // play sound
+            MainActivity.playSound(R.raw.crowd_short);
+
             // check for game over
             if (SettingsActivity.isGameLimitedWithNumGoals()) {
                 int goalLimit = SettingsActivity.getGoalLimit();
