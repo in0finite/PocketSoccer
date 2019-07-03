@@ -1,5 +1,8 @@
 package com.example.pocketsoccer;
 
+import android.content.Context;
+import android.media.MediaPlayer;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,6 +28,35 @@ public class Util {
         fos.write(data);
         fos.flush();
         fos.close();
+    }
+
+    public static MediaPlayer playSound(MediaPlayer mediaPlayer, int soundResId, Context context) {
+
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying())
+                mediaPlayer.stop();
+            mediaPlayer.release();
+        }
+
+        mediaPlayer = MediaPlayer.create(context, soundResId);
+        mediaPlayer.start();
+
+        return mediaPlayer;
+    }
+
+    public static MediaPlayer playSameSound(MediaPlayer mediaPlayer, int soundResId, Context context) {
+
+        if (null == mediaPlayer) {
+            mediaPlayer = MediaPlayer.create(context, soundResId);
+            mediaPlayer.start();
+        } else {
+            if (mediaPlayer.isPlaying())
+                mediaPlayer.stop();
+            mediaPlayer.reset();
+            mediaPlayer.start();
+        }
+
+        return mediaPlayer;
     }
 
 }

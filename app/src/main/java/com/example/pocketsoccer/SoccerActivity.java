@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -76,6 +77,8 @@ public class SoccerActivity extends AppCompatActivity {
     public Movable selectedMovable = null;
 
     public Drawable flagDrawable1,flagDrawable2;
+
+    static MediaPlayer sDiskSoundPlayer;
 
     MyTask mTask;
     View mCustomView;
@@ -454,6 +457,15 @@ public class SoccerActivity extends AppCompatActivity {
                     continue;
 
                 if (checkCollisionBetweenCircles(movableA, movableB)) {
+
+                    if (! movableA.getClass().equals(movableB.getClass())) {
+                        // play sound
+                        try {
+                            sDiskSoundPlayer = Util.playSameSound(sDiskSoundPlayer, R.raw.disk_short, this);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
 
                     break;  // only 1 collision per frame for a single movable, so break
                 }
