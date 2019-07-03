@@ -46,7 +46,7 @@ public class NewGameActivity extends AppCompatActivity {
         mFlagsContainer1.removeAllViews();
         mFlagsContainer2.removeAllViews();
 
-        int[] imageIds = new int[]{R.drawable.en, R.drawable.fr, R.drawable.arg, R.drawable.br, R.drawable.es, R.drawable.ger, R.drawable.rs};
+        int[] imageIds = new int[]{R.drawable.en, R.drawable.fr, R.drawable.arg, R.drawable.br, R.drawable.es, R.drawable.ger, R.drawable.portugal, R.drawable.belgium, R.drawable.italy};
 
         for (final int imageId : imageIds) {
 
